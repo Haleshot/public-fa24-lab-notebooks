@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "marimo",
+# ]
+# ///
+
 import marimo
 
 __generated_with = "0.11.5"
@@ -12,96 +19,148 @@ def _():
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        # Acoustic Positioning System
+    # Cell tags: worksheet-0
 
-        ### EECS16A: Designing Information Devices and Systems I, Fall 2024
-        """
+    mo.md(
+
+        r"""
+
+        # Acoustic Positioning System
+
+
+        ### EECS16A: Designing Information Devices and Systems I, Fall 2024
+
+        """
+
     )
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        # Table of Contents
+    # Cell tags: worksheet-0
 
-        * [Instructions](#instructions)
-        * [Lab Policies](#policies)
-        * [Introduction](#overview)
-            * [Basic Principles of Operation](#bpo)
-            * [Overview](#background)
+    mo.md(
 
-        * [Task 1: Measuring the Similarity of Two Signals](#task1)
-        * [Task 2: Extracting information](#task2)
-        * [Task 3: Detecting Real Signals](#task3)
-        * [Task 4: Separating Signals and Beacons](#task4)
-        * [Task 5: Computing Distances](#task5)
-            * [Task 5a: Identifying Offsets](#task5a)
-            * [Task 5b: Combining Functions](#task5b)
-        * [Task 6: Constructing and Solving a System of Equations](#task6)
-            * [Task 6a: Constructing the System](#task6a)
-            * [Task 6b: Approximating a Solution with Least Squares](#task6b)
-            * [Task 6c: Simulation Testing](#task6c)
-            * [Task 6d: Real Life Positioning](#task6d)
-        * [Feedback](#feedback)
-        * [Checkoff](#checkoff)
+        r"""
 
-        <a id='instructions'></a>
-        ## Instructions
-
-        * **Gently disinfect all commonly touched surfaces** at your lab station using the provided cleaning wipes.
+        # Table of Contents
 
 
-        * Complete this lab by filling in all of the required sections, marked with `"YOUR CODE HERE"` or `"YOUR COMMENTS HERE"`.
+        * [Instructions](#instructions)
+
+        * [Lab Policies](#policies)
+
+        * [Introduction](#overview)
+
+            * [Basic Principles of Operation](#bpo)
+
+            * [Overview](#background)
 
 
-        * When you finish, submit a checkoff request to get checked off for this lab. Be ready to answer a few questions to show your understanding of each section.
+        * [Task 1: Measuring the Similarity of Two Signals](#task1)
+
+        * [Task 2: Extracting information](#task2)
+
+        * [Task 3: Detecting Real Signals](#task3)
+
+        * [Task 4: Separating Signals and Beacons](#task4)
+
+        * [Task 5: Computing Distances](#task5)
+
+            * [Task 5a: Identifying Offsets](#task5a)
+
+            * [Task 5b: Combining Functions](#task5b)
+
+        * [Task 6: Constructing and Solving a System of Equations](#task6)
+
+            * [Task 6a: Constructing the System](#task6a)
+
+            * [Task 6b: Approximating a Solution with Least Squares](#task6b)
+
+            * [Task 6c: Simulation Testing](#task6c)
+
+            * [Task 6d: Real Life Positioning](#task6d)
+
+        * [Feedback](#feedback)
+
+        * [Checkoff](#checkoff)
 
 
-        * Labs will be graded based on completion for teams of 2 students.
+        <a id='instructions'></a>
 
-        <a id='policies'></a>
-        ## Lab Policies
-        * **YOU MUST ATTEND THE LAB SECTION YOU ARE ENROLLED IN. If you anticipate missing a section, please notify your GSI in advance.**
-        * **You are required to return all parts checked out at the beginning of the lab section unless told otherwise.**
-        * **You are free to stay for the full allotted time and hack around with the lab equipment, but please reserve the GSI's time for lab-related questions.**
-        * **Food and drinks are not allowed in the lab.** 
-        * **Clean up, turn off all equipment, and log off of computers before leaving.**
-        """
+        ## Instructions
+
+
+        * **Gently disinfect all commonly touched surfaces** at your lab station using the provided cleaning wipes.
+
+
+
+        * Complete this lab by filling in all of the required sections, marked with `"YOUR CODE HERE"` or `"YOUR COMMENTS HERE"`.
+
+
+
+        * When you finish, submit a checkoff request to get checked off for this lab. Be ready to answer a few questions to show your understanding of each section.
+
+
+
+        * Labs will be graded based on completion for teams of 2 students.
+
+
+        <a id='policies'></a>
+
+        ## Lab Policies
+
+        * **YOU MUST ATTEND THE LAB SECTION YOU ARE ENROLLED IN. If you anticipate missing a section, please notify your GSI in advance.**
+
+        * **You are required to return all parts checked out at the beginning of the lab section unless told otherwise.**
+
+        * **You are free to stay for the full allotted time and hack around with the lab equipment, but please reserve the GSI's time for lab-related questions.**
+
+        * **Food and drinks are not allowed in the lab.** 
+
+        * **Clean up, turn off all equipment, and log off of computers before leaving.**
+
+        """
+
     )
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        ## Introduction
+    # Cell tags: worksheet-0
 
-        This is a long lab, but it is all software. The entire lab is done in this Jupyter notebook.
+    mo.md(
 
-        We use various positioning systems every day. The most commonly used such system is the [Global Positioning System (GPS)](http://en.wikipedia.org/wiki/Global_Positioning_System). The navigation systems in cars, Google Maps, cell phones, and even rockets and spaceships all use GPS.
+        r"""
 
-        In this lab, we are going to explore basic navigation systems and build our own. At the end of this lab, you will have written software (and tested it on real data) that can determine the location of a receiver in 2D space!
-        ### Run the cell below to import the necessary helper functions.
-        """
+        ## Introduction
+
+
+        This is a long lab, but it is all software. The entire lab is done in this Jupyter notebook.
+
+
+        We use various positioning systems every day. The most commonly used such system is the [Global Positioning System (GPS)](http://en.wikipedia.org/wiki/Global_Positioning_System). The navigation systems in cars, Google Maps, cell phones, and even rockets and spaceships all use GPS.
+
+
+        In this lab, we are going to explore basic navigation systems and build our own. At the end of this lab, you will have written software (and tested it on real data) that can determine the location of a receiver in 2D space!
+
+        ### Run the cell below to import the necessary helper functions.
+
+        """
+
     )
     return
 
 
 @app.cell
 def _():
-    # Cell tags: worksheet-0
-    # '%matplotlib inline' command supported automatically in marimo
-    # magic command not supported in marimo; please file an issue to add support
-    # %run support_code/APS.py
-    # magic command not supported in marimo; please file an issue to add support
+    # Cell tags: worksheet-0
+    # '%matplotlib inline' command supported automatically in marimo
+    # magic command not supported in marimo; please file an issue to add support
+    # %run support_code/APS.py
+    # magic command not supported in marimo; please file an issue to add support
     # %run support_code/helper_functions.py
     return
 
@@ -116,7 +175,7 @@ def _(mo):
 
         <br>
         <center>
-        <img src="img/wk1_standard_gps.png" align="center" style="height:250px">
+        <img src="public/wk1_standard_gps.png" align="center" style="height:250px">
 
         **Source**: [Kathleen Cantner, AGI](http://www.earthmagazine.org/article/precise-fault-how-gps-revolutionized-seismic-research)
         </center>
@@ -129,44 +188,70 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        <a id='background'></a>
-        ## Overview
-        The block diagram below describes the system at a high level. 
-        <br>
-        First, each speaker transmits a unique signal. The combined signal from all speakers is then recorded by the microphone and converted to a format that is convenient for further processing. 
-        <br>
-        Next, the component signal from each speaker is identified from the received total signal using cross-correlation analysis, and the corresponding time differences are used to determine the receiver's location.
+    # Cell tags: worksheet-0
 
-        <center>
-        <img src="img/signals.png" align="center" style="height:450px">
-        </center>
-        """
+    mo.md(
+
+        r"""
+
+        <a id='background'></a>
+
+        ## Overview
+
+        The block diagram below describes the system at a high level. 
+
+        <br>
+
+        First, each speaker transmits a unique signal. The combined signal from all speakers is then recorded by the microphone and converted to a format that is convenient for further processing. 
+
+        <br>
+
+        Next, the component signal from each speaker is identified from the received total signal using cross-correlation analysis, and the corresponding time differences are used to determine the receiver's location.
+
+
+        <center>
+
+        <img src="public/signals.png" align="center" style="height:450px">
+
+        </center>
+
+        """
+
     )
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        <a id='task1'></a>
-        ## <font color="blue">Task 1: Measuring the Similarity of Two Signals
+    # Cell tags: worksheet-0
 
-        Our APS setup will use multiple speakers as 'beacons' to emit signals, and a single microphone receiver. The receiver will receive the sum of all the emitted signals at various delays, depending on the relative distances between the speakers and microphone. To identify each speaker's emitted signal from the received signal, as well as the time delay associated with each component, we will use **cross-correlation** analysis. In particular, the combined received signal will be cross correlated with stored copies of **each** speaker's unique emitted signal.
+    mo.md(
 
-        **[Cross-correlation](http://en.wikipedia.org/wiki/Cross-correlation)** is a measure of similarity between two functions - in this case these 'functions' will be vectorized time domain signals. It is a mathematical operation defined by taking successive inner products as one vector 'slides past the other', roughly speaking. Intuitively this is a measure of the 'overlap' between two signals as one signal is shifted in time. For discrete signals, the 'overlap' at time $t$ of the received signal and a copy of a particular speaker generated signal is the inner product of the received signal at that time and a shifted version of the stored copy. Both a mathematical definition and an animation are shown below where $x$ and $y$ are real valued functions.
+        r"""
 
-        You have learned how to calculate the linear cross-correlation between two generic signals. Recall that for two signals $x$ and $y$, the $m^{th}$ element of the linear cross-correlation vector $\vec{\rho_{xy}}$ is defined below:  
+        <a id='task1'></a>
 
-        $$corr_{\vec{x}}(\vec{y})[m]=\vec{\rho_{xy}}[m] \stackrel{\mathrm{def}}{=} \sum_{n=-\infty}^{\infty} x[n] y[n-m]$$
+        ## <font color="blue">Task 1: Measuring the Similarity of Two Signals
 
-        <img src="img/square_triangle_xcorr.gif" border="0" alt="Animation demonstrating cross-correlation." style="height:300px">
-        <!--- <img src="img/cross_correlation_animation_auto-tune.gif" border="0" alt="Animation demonstrating cross-correlation."> --->
-        """
+
+        Our APS setup will use multiple speakers as 'beacons' to emit signals, and a single microphone receiver. The receiver will receive the sum of all the emitted signals at various delays, depending on the relative distances between the speakers and microphone. To identify each speaker's emitted signal from the received signal, as well as the time delay associated with each component, we will use **cross-correlation** analysis. In particular, the combined received signal will be cross correlated with stored copies of **each** speaker's unique emitted signal.
+
+
+        **[Cross-correlation](http://en.wikipedia.org/wiki/Cross-correlation)** is a measure of similarity between two functions - in this case these 'functions' will be vectorized time domain signals. It is a mathematical operation defined by taking successive inner products as one vector 'slides past the other', roughly speaking. Intuitively this is a measure of the 'overlap' between two signals as one signal is shifted in time. For discrete signals, the 'overlap' at time $t$ of the received signal and a copy of a particular speaker generated signal is the inner product of the received signal at that time and a shifted version of the stored copy. Both a mathematical definition and an animation are shown below where $x$ and $y$ are real valued functions.
+
+
+        You have learned how to calculate the linear cross-correlation between two generic signals. Recall that for two signals $x$ and $y$, the $m^{th}$ element of the linear cross-correlation vector $\vec{\rho_{xy}}$ is defined below:  
+
+
+        $$corr_{\vec{x}}(\vec{y})[m]=\vec{\rho_{xy}}[m] \stackrel{\mathrm{def}}{=} \sum_{n=-\infty}^{\infty} x[n] y[n-m]$$
+
+
+        <img src="public/square_triangle_xcorr.gif" border="0" alt="Animation demonstrating cross-correlation." style="height:300px">
+
+        <!--- <img src="public/cross_correlation_animation_auto-tune.gif" border="0" alt="Animation demonstrating cross-correlation."> --->
+
+        """
+
     )
     return
 
@@ -219,30 +304,33 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        **Below, you are given a cross-correlation function that performs periodic cross-correlation on two signals using `np.correlate`.**
+    # Cell tags: worksheet-0
 
-        ```python
-        def cross_correlation(stationary_signal, sliding_signal):
-            \"\"\"Compute the cross_correlation of two given signals    
-            Args:
-            stationary_signal (np.array): input signal 1
-            sliding_signal (np.array): input signal 2
+    mo.md(
+        r"""
+        **Below, you are given a cross-correlation function that performs periodic cross-correlation on two signals using `np.correlate`.**
 
-            Returns:
-            cross_correlation (np.array): periodic cross-correlation of stationary_signal and sliding_signal
+        ```python
+        def cross_correlation(stationary_signal, sliding_signal):
+        
+            \"\"\"Compute the cross_correlation of two given signals 
+            
+            Args:
+            stationary_signal (np.array): input signal 1
+            sliding_signal (np.array): input signal 2
 
-            >>> cross_correlation([0, 1, 2, 3], [0, 2, 3, 0])
-            [8, 13, 6, 3]
-            \"\"\"
-            inf_stationary_signal = np.concatenate((stationary_signal, stationary_signal))
-            entire_corr_vec = np.correlate(inf_stationary_signal, sliding_signal, 'full')
-        ```
+            Returns:
+            cross_correlation (np.array): periodic cross-correlation of stationary_signal and sliding_signal
 
+            >>> cross_correlation([0, 1, 2, 3], [0, 2, 3, 0])
+            [8, 13, 6, 3]
+            \"\"\"
+            inf_stationary_signal = np.concatenate((stationary_signal, stationary_signal))
+            entire_corr_vec = np.correlate(inf_stationary_signal, sliding_signal, 'full')
+        ```
 
-        """
+        """
+
     )
     return
 
@@ -267,37 +355,57 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        <a id='task2'></a>
-        ## <font color="blue">Task 2: Extracting Information
+    # Cell tags: worksheet-0
 
-        The acoustic positioning system we will design uses speakers as *beacons* that each transmit a (known) unique *beacon signal*. The beacon signals will be used to determine the position of a *receiver* - a microphone. Figure 3a shows examples of waveforms generated by a two beacon system. The beacons are synchronized, i.e all beacon signals are transmitted from their respective beacons simultaneously. Figure 3b demonstrates an example of a  receiver that is further away from beacon 2 than beacon 1, consequently receiving the beacon signal from beacon 2 **after** the beacon signal from beacon 1.
+    mo.md(
+
+        r"""
+
+        <a id='task2'></a>
+
+        ## <font color="blue">Task 2: Extracting Information
 
 
-        <img src="img/Slide2.tiff.png" width=700px></img>
-        <h4><center>Figure 3</center></h4>
+        The acoustic positioning system we will design uses speakers as *beacons* that each transmit a (known) unique *beacon signal*. The beacon signals will be used to determine the position of a *receiver* - a microphone. Figure 3a shows examples of waveforms generated by a two beacon system. The beacons are synchronized, i.e all beacon signals are transmitted from their respective beacons simultaneously. Figure 3b demonstrates an example of a  receiver that is further away from beacon 2 than beacon 1, consequently receiving the beacon signal from beacon 2 **after** the beacon signal from beacon 1.
 
-        The raw signal that the receiver measures shown in Figure 4a (black), is a superposition of beacon signal 1 and a delayed beacon signal 2. We can cross-correlate this received signal  with stored copies of each unique beacon signal to determine when each beacon signal arrived at the receiver. For a given beacon signal, this will be the time index that corresponds to the maximum cross-correlation with the stored copy of that particular beacon signal. 
 
-        <img src="img/Slide3.tiff.png" width=700px></img>
-        <h4><center>Figure 4</center></h4>
 
-        Notice that in Figure 4b, the cross-correlation of the received signal with a stored copy of beacon signal 1 attains its maximum 3 milliseconds **before** the cross-correlation of the received signal with beacon signal 2 is maximized. We can therefore infer that beacon signal 1 was received 3 milliseconds before beacon signal 2, and that the distance of the microphone from the first beacon is less than the distance of the microphone from the second beacon.
+        <img src="public/Slide2.tiff.png" width=700px></img>
 
-        Although the two beacon signals are different, notice that the cross-correlation **between the two beacon signals** is still non-zero. This is fine for our purposes, and will still allow for robust identification of beacon signals. In particular we only require that:
+        <h4><center>Figure 3</center></h4>
 
-        * The cross-correlation **between different beacon signals** is **small**.
-        * The cross-correlation of a beacon signal with itself (autocorrelation) is **small** for **non zero shifts**. 
-        * The autocorrelation of a beacon signal with itself is **large** at **zero shift**.
 
-        If these conditions hold, we can still identify the beacon signals that a received signal is composed of, since the cross-correlation between a beacon signal and the received signal at the correct offset (i.e where the overlap between the beacon signal and the corresponding component in the received signal is maximized) will always be considerably larger than other cross-correlation values. 
+        The raw signal that the receiver measures shown in Figure 4a (black), is a superposition of beacon signal 1 and a delayed beacon signal 2. We can cross-correlate this received signal  with stored copies of each unique beacon signal to determine when each beacon signal arrived at the receiver. For a given beacon signal, this will be the time index that corresponds to the maximum cross-correlation with the stored copy of that particular beacon signal. 
 
-        Real Global Positioning Systems deal with this problem by using pseudorandom binary sequences (signals composed of just 1s and 0s), also known as **Gold Codes**, constructed with the three properties described above. The theory and implementation of these signals is beyond the scope of this class. We have provided a large set of Gold Codes that are designed to work well for our purposes. 
 
-        Run the next cell to simulate three beacons that each produce a unique gold code.
-        """
+        <img src="public/Slide3.tiff.png" width=700px></img>
+
+        <h4><center>Figure 4</center></h4>
+
+
+        Notice that in Figure 4b, the cross-correlation of the received signal with a stored copy of beacon signal 1 attains its maximum 3 milliseconds **before** the cross-correlation of the received signal with beacon signal 2 is maximized. We can therefore infer that beacon signal 1 was received 3 milliseconds before beacon signal 2, and that the distance of the microphone from the first beacon is less than the distance of the microphone from the second beacon.
+
+
+        Although the two beacon signals are different, notice that the cross-correlation **between the two beacon signals** is still non-zero. This is fine for our purposes, and will still allow for robust identification of beacon signals. In particular we only require that:
+
+
+        * The cross-correlation **between different beacon signals** is **small**.
+
+        * The cross-correlation of a beacon signal with itself (autocorrelation) is **small** for **non zero shifts**. 
+
+        * The autocorrelation of a beacon signal with itself is **large** at **zero shift**.
+
+
+        If these conditions hold, we can still identify the beacon signals that a received signal is composed of, since the cross-correlation between a beacon signal and the received signal at the correct offset (i.e where the overlap between the beacon signal and the corresponding component in the received signal is maximized) will always be considerably larger than other cross-correlation values. 
+
+
+        Real Global Positioning Systems deal with this problem by using pseudorandom binary sequences (signals composed of just 1s and 0s), also known as **Gold Codes**, constructed with the three properties described above. The theory and implementation of these signals is beyond the scope of this class. We have provided a large set of Gold Codes that are designed to work well for our purposes. 
+
+
+        Run the next cell to simulate three beacons that each produce a unique gold code.
+
+        """
+
     )
     return
 
@@ -322,86 +430,114 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        If you are given some beacon signals (gold codes) and a received signal that is a composition of these gold codes at different delays, how would you calculate when (in samples) each beacon signal arrived at the receiver?
+    # Cell tags: worksheet-0
 
-        **<font color="red">Implement a helper function `identify_peak` which takes in a signal with a single global maximum as an input and returns the index of this global maximum.** <font color="red">Note that the signals are zero-indexed, as shown in the example input and output of the function below.
-        """
+    mo.md(
+
+        r"""
+
+        If you are given some beacon signals (gold codes) and a received signal that is a composition of these gold codes at different delays, how would you calculate when (in samples) each beacon signal arrived at the receiver?
+
+
+        **<font color="red">Implement a helper function `identify_peak` which takes in a signal with a single global maximum as an input and returns the index of this global maximum.** <font color="red">Note that the signals are zero-indexed, as shown in the example input and output of the function below.
+
+        """
+
     )
     return
 
 
 @app.cell
 def _():
-    # Cell tags: worksheet-0
-    def identify_peak(signal):
-        """Returns the index of the peak of the given signal.
-        Args:
-        signal (np.array): input signal
+    # Cell tags: worksheet-0
+    def identify_peak(signal):
+        """Returns the index of the peak of the given signal.
+        Args:
+        signal (np.array): input signal
 
-        Returns:
-        index (int): index of the peak
+        Returns:
+        index (int): index of the peak
 
-        >>> identify_peak([1, 2, 5, 7, 12, 4, 1, 0])
-        4
-        >>> identify_peak([1, 2, 2, 199, 23, 1])
-        3
-        """
+        >>> identify_peak([1, 2, 5, 7, 12, 4, 1, 0])
+        4
+        >>> identify_peak([1, 2, 2, 199, 23, 1])
+        3
+        """
+
         # YOUR CODE HERE
     return (identify_peak,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        **<font color="red">Verify the following test for `identify_peak`.**
-        """
+    # Cell tags: worksheet-0
+
+    mo.md(
+
+        r"""
+
+        **<font color="red">Verify the following test for `identify_peak`.**
+
+        """
+
     )
     return
 
 
 @app.cell
 def _(cross_correlation, identify_peak, test):
-    # Cell tags: worksheet-0
+    # Cell tags: worksheet-0
+
     test(cross_correlation, identify_peak, 2)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        <a id='task3'></a>
-        # <font color="blue">Task 3: Detecting Real Signals
+    # Cell tags: worksheet-0
 
-        We will now test the functions you have written with real data.
+    mo.md(
 
-        For your convenience, we have pre-recorded some audio samples for you to use from the real setup that you will use toward the end. The code block below will load a test signal (in blue) and test the code you have written, displaying the signal cross correlated with four known signals. This might take a while ($\approx 30$ seconds).
-        """
+        r"""
+
+        <a id='task3'></a>
+
+        # <font color="blue">Task 3: Detecting Real Signals
+
+
+        We will now test the functions you have written with real data.
+
+
+        For your convenience, we have pre-recorded some audio samples for you to use from the real setup that you will use toward the end. The code block below will load a test signal (in blue) and test the code you have written, displaying the signal cross correlated with four known signals. This might take a while ($\approx 30$ seconds).
+
+        """
+
     )
     return
 
 
 @app.cell
 def _(Lab, identify_peak, np):
-    # Cell tags: worksheet-0
-    Lab.rawSignal = np.load('sig.npy')
+    # Cell tags: worksheet-0
+
+    Lab.rawSignal = np.load('sig.npy')
+
     Lab.load_corr_sig(identify_peak)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    # Cell tags: worksheet-0
-    mo.md(
-        r"""
-        You should see four discernible peaks after cross-correlating the signals. 
-        """
+    # Cell tags: worksheet-0
+
+    mo.md(
+
+        r"""
+
+        You should see four discernible peaks after cross-correlating the signals. 
+
+        """
+
     )
     return
 
@@ -577,32 +713,32 @@ def _(mo):
 
 @app.cell
 def _(identify_peak, np):
-    def identify_offsets(averaged):
-        """ Compute the offset (in units of samples) of each signal relative to the reference beacon by
-        identifying the peak of each signal (absolute offset) and 
-        subtracting the peak of the reference beacon's signal from it (relative offset).
+    def identify_offsets(averaged):
+        """ Compute the offset (in units of samples) of each signal relative to the reference beacon by
+        identifying the peak of each signal (absolute offset) and 
+        subtracting the peak of the reference beacon's signal from it (relative offset).
 
-        (The first line of code centers the signals about the peak corresponding to the reference beacon for you.)
+        (The first line of code centers the signals about the peak corresponding to the reference beacon for you.)
 
-        Functions to Use: identify_peak
+        Functions to Use: identify_peak
 
-        Args:
-        averaged (list): the output of the average_multiple_signals() function (a list of single period cross correlated sigs)
+        Args:
+        averaged (list): the output of the average_multiple_signals() function (a list of single period cross correlated sigs)
 
-        Returns (list): a list containing the offset of each input signal relative to the reference beacon (beacon0)
-        """
-        # Reshaping the input so that all of our signals are centered about the peak corresponding to beacon0
-        shifted = [np.roll(avg, len(averaged[0]) // 2 - identify_peak(averaged[0])) for avg in averaged]
-        beacon0_offset = identify_peak(shifted[0])
+        Returns (list): a list containing the offset of each input signal relative to the reference beacon (beacon0)
+        """
+        # Reshaping the input so that all of our signals are centered about the peak corresponding to beacon0
+        shifted = [np.roll(avg, len(averaged[0]) // 2 - identify_peak(averaged[0])) for avg in averaged]
+        beacon0_offset = identify_peak(shifted[0])
 
-        # shifted:
-        #     shifted is a list of shifted signals centered about the peak corresponding to beacon0 
-        # beacon0_offset:
-        #     The absolute offset that beacon0 starts at
-        # YOUR TASK: Return a list of relative offsets (where each beacon starts relative to
-        #            where beacon0 starts). This means that beacon0's offset should be 0.
+        # shifted:
+        #     shifted is a list of shifted signals centered about the peak corresponding to beacon0 
+        # beacon0_offset:
+        #     The absolute offset that beacon0 starts at
+        # YOUR TASK: Return a list of relative offsets (where each beacon starts relative to
+        #            where beacon0 starts). This means that beacon0's offset should be 0.
 
-        # Use `shifted` and `beacon0_offset` to determine the relative offsets of other beacons
+        # Use `shifted` and `beacon0_offset` to determine the relative offsets of other beacons
 
         # YOUR CODE HERE
     return (identify_offsets,)
@@ -636,15 +772,16 @@ def _(mo):
 
 @app.cell
 def _():
-    def offsets_to_tdoas(offsets, sampling_freq):
-        """ Convert a list of offsets to a list of TDOA's
+    def offsets_to_tdoas(offsets, sampling_freq):
+        """ Convert a list of offsets to a list of TDOA's
 
-        Args:
-        offsets (list): list of offsets in samples
-        sampling_freq (int): sampling frequency in Hz
+        Args:
+        offsets (list): list of offsets in samples
+        sampling_freq (int): sampling frequency in Hz
 
-        Returns (list): a list of TDOAs corresponding to the input offsets
-        """
+        Returns (list): a list of TDOAs corresponding to the input offsets
+        """
+
         # YOUR CODE HERE
     return (offsets_to_tdoas,)
 
@@ -677,17 +814,18 @@ def _(mo):
 
 @app.cell
 def _():
-    def signal_to_tdoas(raw_signal):
-        """ Compute a list of offsets from the microphone to each speaker.
+    def signal_to_tdoas(raw_signal):
+        """ Compute a list of offsets from the microphone to each speaker.
 
-        Functions to use: separate_signal, average_multiple_signals, identify_offsets, offsets_to_tdoas
+        Functions to use: separate_signal, average_multiple_signals, identify_offsets, offsets_to_tdoas
 
-        Args:
-        raw_signal (np.array): raw received signal from the microphone (e.g. no separation, averaging, etc).
+        Args:
+        raw_signal (np.array): raw received signal from the microphone (e.g. no separation, averaging, etc).
 
-        Returns (list): TDOA for each beacon (beacon0, beacon1, etc).
-        """
-        sampling_freq = 44100
+        Returns (list): TDOA for each beacon (beacon0, beacon1, etc).
+        """
+        sampling_freq = 44100
+
         # YOUR CODE HERE
     return (signal_to_tdoas,)
 
@@ -732,7 +870,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(
         r"""
@@ -839,7 +977,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""**`YOUR ANSWER HERE`**""")
     return
@@ -853,29 +991,29 @@ def _(mo):
 
 @app.cell
 def _(np):
-    def construct_system(speakers, TDOA, v_s):
-        """Construct the components of the system according to a list of TDOAs and speaker coordinates
-        Args:
-        speakers (np.array): an array of speaker coordinates
-        TDOA (np.array): an array of relative TDOA's
+    def construct_system(speakers, TDOA, v_s):
+        """Construct the components of the system according to a list of TDOAs and speaker coordinates
+        Args:
+        speakers (np.array): an array of speaker coordinates
+        TDOA (np.array): an array of relative TDOA's
 
-        Returns:
-        A (np.array): the matrix corresponding to the least squares system
-        b (np.array): the vector corresponding to the least squares system
+        Returns:
+        A (np.array): the matrix corresponding to the least squares system
+        b (np.array): the vector corresponding to the least squares system
 
-        """
+        """
 
-        # Initialize A matrix with zeroes
-        A = np.zeros((speakers.shape[0]-1,3))
-        # Set the first two columns of A to positions of beacons
-        A[:,:2] = speakers[1:]
-        # Calculate and set the last column of A from TDOAs
-        A[:,2] = v_s*v_s*TDOA[1:]
-        # Add the scalar multiple of 2 in front
-        A = A*2
+        # Initialize A matrix with zeroes
+        A = np.zeros((speakers.shape[0]-1,3))
+        # Set the first two columns of A to positions of beacons
+        A[:,:2] = speakers[1:]
+        # Calculate and set the last column of A from TDOAs
+        A[:,2] = v_s*v_s*TDOA[1:]
+        # Add the scalar multiple of 2 in front
+        A = A*2
 
-        # Calculate the b vector
-        # (np.sum is horizontally summing the squared positions)
+        # Calculate the b vector
+        # (np.sum is horizontally summing the squared positions)
         b = np.sum(speakers[1:,:] * speakers[1:,:],axis=1) - v_s*v_s*TDOA[1:]*TDOA[1:]
     return (construct_system,)
 
@@ -913,16 +1051,17 @@ def _(mo):
 
 @app.cell
 def _():
-    def least_squares(A, b):
-        """Solve the least squares problem
+    def least_squares(A, b):
+        """Solve the least squares problem
 
-        Args:
-        A (np.array): the matrix in the least squares problem
-        b (np.array): the vector in the least squares problem
+        Args:
+        A (np.array): the matrix in the least squares problem
+        b (np.array): the vector in the least squares problem
 
-        Returns:
-        pos (np.array): the result of the least squares problem (x)    
-        """
+        Returns:
+        pos (np.array): the result of the least squares problem (x)    
+        """
+
 
         # YOUR CODE HERE
     return (least_squares,)
@@ -941,9 +1080,9 @@ def _(mo):
 
 @app.cell
 def _(construct_system, least_squares, test_loc):
-    # Testing signals with noise
-    test_loc(least_squares, construct_system, 1.2, 3.6, 30)
-    test_loc(least_squares, construct_system, 1.2, 3.6, 40)
+    # Testing signals with noise
+    test_loc(least_squares, construct_system, 1.2, 3.6, 30)
+    test_loc(least_squares, construct_system, 1.2, 3.6, 40)
     test_loc(least_squares, construct_system, 1.2, 3.6, 50)
     return
 
@@ -967,7 +1106,7 @@ def _(mo):
 
 @app.cell
 def _(APS, construct_system, least_squares, signal_to_tdoas):
-    Lab = APS('new_data.npy', [0, 40], ms= True)
+    Lab = APS('new_data.npy', [0, 40], ms= True)
     Lab.simulation_testing('APS_Recording/test-signal.wav', construct_system, least_squares, signal_to_tdoas)
     return (Lab,)
 
