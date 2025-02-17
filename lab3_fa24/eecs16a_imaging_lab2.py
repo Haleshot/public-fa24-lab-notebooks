@@ -5,6 +5,7 @@
 #     "matplotlib==3.10.0",
 #     "numpy==2.2.3",
 #     "pyserial==3.5",
+#     "tqdm==4.67.1",
 # ]
 # ///
 
@@ -95,7 +96,7 @@ def _(mo):
         r"""
         # <a id='overview'><span style='color:blue'>Overview</span></a>
         <center>
-        <img src="images/systemdiagram.png" style="height:256px" />
+        <img src="./public/systemdiagram.png" style="height:256px" />
         </center>
 
         This week, you will photograph a real-life object pixel-by-pixel using a projector and light sensor circuit (a.k.a. <b>single pixel camera</b>) and write code in your Jupyter notebook to display the captured image. 
@@ -113,7 +114,7 @@ def _(mo):
         <br><br>
         <center>
             <b>Setup</b>
-        <img src="images/projector_setup.jpg" style="height:350px" />
+        <img src="./public/projector_setup.jpg" style="height:350px" />
         </center>
         <br>
 
@@ -170,7 +171,7 @@ def _(mo):
         Note: We will be using 0 indexing in lab as most programming languages (including Python) index in lists starting from 0.
 
         <center>
-        <img src="images/gradient.JPG" align="center" style="height:200px" />
+        <img src="public/gradient.JPG" align="center" style="height:200px" />
         <figcaption>Gradient image example</figcaption>
         </center>
 
@@ -183,10 +184,10 @@ def _(mo):
 
 @app.cell
 def _(np, plt):
-    # A 5x5 gradient image with values from 0 to 1.
-    gradient_image = np.linspace(0, 1, 25).reshape([5, 5])
+    # A 5x5 gradient image with values from 0 to 1.
 
-    print(gradient_image)
+    gradient_image = np.linspace(0, 1, 25).reshape([5, 5])
+    print(gradient_image)
     plt.imshow(gradient_image, cmap = "gray", interpolation = "nearest")
     return (gradient_image,)
 
@@ -208,7 +209,7 @@ def _(mo):
         Essentially, the $0$th row is transposed (or flipped on its side by rotating 90 degress clockwise), such that its left-most element is on top and its right-most element is on the bottom. The $1$st row is also transposed on its side in the same way and appended below. These steps are repeated for each subsequent row of the original 2D image until you build a $9 \times 1$ **column vector**.    
 
         <center>
-        <img src="images/matrix_to_col_new.png" style="width:500px"/>
+        <img src="public/matrix_to_col_new.png" style="width:500px"/>
         </center>
 
         Mathematically, each pixel value in the $3 \times 3$ image is represented as a variable $p_{ij}$, where $i$ is the row and $j$ is the column associated with the pixel location. This same image represented as a 1-D column vector (called $\vec{i}$) is:
@@ -252,7 +253,7 @@ def _(mo):
         However, the mask must first be converted into its 2D form, as shown below, before it's projected over the 2D image. The mask exposes only the top-left pixel of the 2D image and hides all other pixels. Note that you can convert a 2D mask into a 1D row of $H$ by appending each of the 2D mask's rows to the right of the previous row.
         <br><br>
         <center>
-        <img src="images/black_hite.png" style="width:400px"/>
+        <img src="public/black_hite.png" style="width:400px"/>
         </center>
 
         To expose each pixel of the 3x4 image $\vec{i}$ individually, we would need a 12x12 $H$ that has 12 masks (rows), each with a single white "exposed" pixel in a unique location. This means that **row 1 of $H$** (exposing $iv_{01}$) would look like:
@@ -264,7 +265,7 @@ def _(mo):
 
         <br><br>
         <center>
-        <img src="images/black_white_shifted.jpg" style="width:400px"/>
+        <img src="public/black_white_shifted.jpg" style="width:400px"/>
         </center>
         """
     )
@@ -306,6 +307,21 @@ def _(mo):
         """
     )
     return
+
+
+app._unparsable_cell(
+    r"""
+    # TODO: Create the mask matrix `H` for scanning a 5x5 image (be careful about the dimensions!)
+    H = # YOUR CODE HERE
+
+    # Test H for correctness
+    test1b_H(H)
+
+    # Display this matrix
+    plt.imshow(H, cmap = \"gray\", interpolation = \"nearest\")
+    """,
+    name="_"
+)
 
 
 @app.cell(hide_code=True)
@@ -353,6 +369,22 @@ def _(mo):
     return
 
 
+app._unparsable_cell(
+    r"""
+    # Iterate through rows of matrix H and form individual masks
+    plt.figure(figsize = (20, 20)) 
+    for k in range(25):
+        plt.subplot(5, 5, k + 1)
+        
+        mask = # YOUR CODE HERE
+        
+        plt.imshow(mask, cmap = \"gray\", interpolation = \"nearest\")
+        plt.title(\"Mask \" + str(k) + \" = Row \" + str(k) + \" of Matrix H\")
+    """,
+    name="_"
+)
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -370,7 +402,7 @@ def _(mo):
         <b>Hint 2</b>: Here's one of many variations of $H_{alt}$ for an image of size 4x4.
         <br><br>
         <center>
-        <img src="images/H_alt_new_4x4.png" style="width:300px"/>
+        <img src="public/H_alt_new_4x4.png" style="width:300px"/>
             <figcaption>A variation of $H_{alt}$ for a 4x4 image. </figcaption>
         </center>
         """
@@ -496,7 +528,7 @@ def _(mo):
 @app.cell
 def _():
     # magic command not supported in marimo; please file an issue to add support
-        # %run scripts/test.py
+    # %run scripts/test.py
     return
 
 
@@ -550,7 +582,7 @@ def _(mo):
 
 @app.cell
 def _(H, H_alt, np):
-    np.save('H.npy', H)
+    np.save('H.npy', H)
     np.save('H_alt.npy', H_alt)
     return
 
@@ -580,12 +612,12 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(
         r"""
         ### <a id ='setup'></a><span style = "color: blue">Box Setup</span>
-        <img src="images/projector_setup.jpg" style="width:400px"/>
+        <img src="public/projector_setup.jpg" style="width:400px"/>
         """
     )
     return
@@ -601,12 +633,12 @@ def _(mo):
         4. Orient the projector so the lens is facing towards the object being imaged, and the ports are facing the opposite direction (see image).
         5. **Pay close attention to where the holes are in the box, picture on next page**. The holes are cut out to make connecting the mini-HDMI and power cables easier. Align the holes to both the circular power connector and the mini-HDMI port on the back of the projector to the short, back side of the box that has a hole in it.
         6. Route the power cable through the back to the DC connector and the mini-HDMI cable (at your lab station behind the keyboard under the monitor stand, **one end already connected to your lab computer**) through the back and connect them both to the projector **very gently**. Please ensure you’re using the right projector ports.
-            <img src="images/projector_overview_ports.png" style="width:400px"/>
+            <img src="public/projector_overview_ports.png" style="width:400px"/>
         7. Take the long USB cable and route it through the side hole (or back) and connect it to the Arduino.
         8. The power cable must be plugged into an outlet - there are outlets at each station (see picture). Make sure the barrel connector is fully plugged into your projector - if the connection is loose during the scan you may have issues. A red light should show on the back of the projector to indicate that it is charging. Turn on the projector by pressing and holding the power button on the back.
         9. Plug the USB 2.0 end of the USB cable into the lab computer.
         10. Confirm your setup with the full setup below
-        <img src="images/box_setup.jpg" style="width:400px"/>
+        <img src="public/box_setup.jpg" style="width:400px"/>
         """
     )
     return
@@ -620,7 +652,7 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(r"""<img src="images/projector_overview.png" style="width:500px"/>""")
+    mo.md(r"""<img src="public/projector_overview.png" style="width:500px"/>""")
     return
 
 
@@ -629,11 +661,12 @@ def _(mo):
     mo.md(
         r"""
         **Setup the projector with the following steps:**
+
         1. Turn on the projector by holding down the Power button (see the previous figure). You should see a green light turn on when it powers on.
         2. Find the Focus Adjustment wheel on the side of the projector to adjust the focus of the projection onto the box. Focus it as close as possible.
-        <img src="images/projector_home.jpg" style="width:400px"/>
+        <img src="public/projector_home.jpg" style="width:400px"/>
         3. Using the left/right arrows on the Directional Pads, select **INPUTS** on the projector's main menu, then **DIGITAL**. After a few seconds, you should see the Windows 10 desktop.
-        <img src="images/projector_inputs.jpg" style="width:400px"/>
+        <img src="public/projector_inputs.jpg" style="width:400px"/>
         4. If you see the Windows 10 taskbar at the bottom of the projected screen, take the following precautions:
             - Hit the Windows key and type Settings.
             - Click on the Personalization icon.
@@ -642,7 +675,7 @@ def _(mo):
         5. If your monitor turns off, hit Windows key and P at the same time. Then select “Extend”
         6. Use the **Back button** on the projector to return to displaying the **main menu**.
         7. Use the left/right arrows to select the **Settings** option (gears icon, see picture on previous page).
-        <img src="images/projector_settings.jpg" style="width:400px"/>
+        <img src="public/projector_settings.jpg" style="width:400px"/>
         8. Select **Picture Mode** and change the **Picture Mode** from Standard to **User**.
         9. **IMPORTANT**: Use the down arrow to move the cursor down to Contrast. Then use the right arrow to adjust the contrast to **100**.
         10. **IMPORTANT**: Move the cursor down to Brightness and use the left arrow to adjust the brightness to **0**.
@@ -670,10 +703,10 @@ def _(mo):
         3. Select *Tools > Board > Arduino Leonardo*.
         4. Verify the correct Serial Port is selected in the Ardunio IDE by going to *Tools > Port*. If the selected value already displays the board name after the COM port (i.e. "COM5 (Arduino Leonardo)"), proceed to the next step. If not, open the Windows "Device Manager" and look for the Arduino Leonardo's COM Port under "COM Ports", then select this port in the Arduino IDE.
         5. Upload the code by clicking on the Upload button (white circle with a right-pointing arrow, as shown below):
-        <img src="images/arduino_menu.png" style="width:200px"/>
+        <img src="public/arduino_menu.png" style="width:200px"/>
         6. Hit the **RESET** button on your Arduino (labeled reset or RST).
         7. To verify that the program is working, **type a 6 into the serial monitor** (*Tools > Serial Monitor*). **You will need to set the Baud Rate to 115200**. You should see a reading from the ambient light sensor appear. If the numbers increase with light and decrease with less light your setup is good. You must close this window before continuing.
-        <img src="images/arduino_serial_monitor.png" style="width:400px"/>
+        <img src="public/arduino_serial_monitor.png" style="width:400px"/>
         """
     )
     return
@@ -717,13 +750,13 @@ def _(mo):
 
 @app.cell
 def _(np):
-    # Import necessary libraries (so you don't have to start from the top)
-    # magic command not supported in marimo; please file an issue to add support
-    # %run scripts/helpers.py
-    # '%matplotlib inline' command supported automatically in marimo
-    import capture_image
+    # Import necessary libraries (so you don't have to start from the top)
+    # magic command not supported in marimo; please file an issue to add support
+    # %run scripts/helpers.py
+    # '%matplotlib inline' command supported automatically in marimo
+    import capture_image
 
-    H = np.load("H.npy")
+    H = np.load("H.npy")
     sr = capture_image.scan(H, multi_pixel=False, width=40, height=30)
     return H, capture_image, sr
 
@@ -735,6 +768,7 @@ def _(mo):
         **Not getting a good image?**
 
         Make sure you have the following:
+
         1. The projector turned on and oriented in the correct direction
         2. The projector input set to "Digital"
         3. Verified the mask is displaying from the projector
@@ -789,7 +823,7 @@ def _(mo):
         Here is an example of a picture we took using this setup:
 
         <center>
-        <img src="images/ee16a_picture.png"/>
+        <img src="public/ee16a_picture.png"/>
         </center>
         """
     )
@@ -810,7 +844,7 @@ def _(mo):
 
 @app.cell
 def _(capture_image, np):
-    H_alt = np.load('H_alt.npy')
+    H_alt = np.load('H_alt.npy')
     sr_1 = capture_image.scan(H_alt, multi_pixel=False, width=40, height=30)
     return H_alt, sr_1
 
@@ -877,7 +911,6 @@ def _(mo):
         $$\vec{s_{gray}} = H_{gray} \vec{i_{gray}}$$
 
         we now have
-
         $$\vec{s_{red}} = H_{red} \vec{i_{red}}$$
         $$\vec{s_{green}} = H_{green} \vec{i_{green}}$$
         $$\vec{s_{blue}} = H_{blue} \vec{i_{blue}}$$
@@ -902,18 +935,18 @@ def _(mo):
 
 @app.cell
 def _(np, plt):
-    H_1 = np.eye(1024)
-    np.save('H.npy', H_1)
-    sr_blue = np.load('sensor_readingsH_100_0_blue.npy')[:1024]
-    sr_green = np.load('sensor_readingsH_100_0_green.npy')[:1024]
-    sr_red = np.load('sensor_readingsH_100_0_red.npy')[:1024]
-    sr_2 = np.zeros((32, 32, 3))
-    sr_2[:, :, 0] = np.reshape(sr_red, (32, 32))
-    sr_2[:, :, 1] = np.reshape(sr_green, (32, 32))
-    sr_2[:, :, 2] = np.reshape(sr_blue, (32, 32))
-    mx = np.amax(sr_2)
-    sr_2 = sr_2 * (255 / mx)
-    sr_2 = np.require(sr_2, np.uint8, 'C')
+    H_1 = np.eye(1024)
+    np.save('H.npy', H_1)
+    sr_blue = np.load('sensor_readingsH_100_0_blue.npy')[:1024]
+    sr_green = np.load('sensor_readingsH_100_0_green.npy')[:1024]
+    sr_red = np.load('sensor_readingsH_100_0_red.npy')[:1024]
+    sr_2 = np.zeros((32, 32, 3))
+    sr_2[:, :, 0] = np.reshape(sr_red, (32, 32))
+    sr_2[:, :, 1] = np.reshape(sr_green, (32, 32))
+    sr_2[:, :, 2] = np.reshape(sr_blue, (32, 32))
+    mx = np.amax(sr_2)
+    sr_2 = sr_2 * (255 / mx)
+    sr_2 = np.require(sr_2, np.uint8, 'C')
     plt.imshow(sr_2, interpolation='nearest')
     return H_1, mx, sr_2, sr_blue, sr_green, sr_red
 
@@ -926,8 +959,8 @@ def _(mo):
 
 @app.cell
 def _(np, plt, post_process, sr_blue, sr_green, sr_red):
-    sr_3 = post_process(sr_blue, sr_green, sr_red)
-    sr_3 = np.require(sr_3, np.uint8, 'C')
+    sr_3 = post_process(sr_blue, sr_green, sr_red)
+    sr_3 = np.require(sr_3, np.uint8, 'C')
     plt.imshow(sr_3, interpolation='nearest')
     return (sr_3,)
 

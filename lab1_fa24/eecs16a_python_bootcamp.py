@@ -11,14 +11,13 @@
 
 import marimo
 
-__generated_with = "0.11.4"
+__generated_with = "0.11.5"
 app = marimo.App(width="medium")
 
 
 @app.cell
 def _():
     import marimo as mo
-
     return (mo,)
 
 
@@ -226,13 +225,10 @@ def _(mo):
 @app.cell
 def _():
     simple_number = 6
-
     numbers = [1, 2, 3, 4, simple_number]  # this is a list
-
     add = sum(
         numbers
     )  # sum is a function that takes a list of numbers and returns their sum
-
     print(add)
     return add, numbers, simple_number
 
@@ -240,9 +236,7 @@ def _():
 @app.cell
 def _():
     letter = "a"
-
     show = print  # this statement makes show point to the function print. Thus, show(param) will do the same thing as print(param)
-
     show(letter)
     return letter, show
 
@@ -256,9 +250,7 @@ def _(mo):
 @app.cell
 def _():
     def welcome(name):
-
         print("Welcome to 16A " + name)
-
     welcome("your name here")  # type your name inside the quotes
     return (welcome,)
 
@@ -291,15 +283,11 @@ def _(mo):
 @app.cell
 def _():
     # Example 1: Simple if/else
-
     x = 16
 
     if x > 20:  # Asking the question, "Is x greater than 20?"
-
         print("if condition is True!")
-
     else:
-
         print("if condition is False!")
     return (x,)
 
@@ -307,17 +295,11 @@ def _():
 @app.cell
 def _():
     x_1 = 16
-
     if x_1 > 20:
-
         print("first if condition is True!")
-
     elif x_1 > 10 and x_1 < 20:
-
         print("first if condition is False and second if condition is True!")
-
     else:
-
         print("Neither if condition was True!")
     return (x_1,)
 
@@ -345,16 +327,13 @@ def _():
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""Unlike while loops, which can theoretically run "forever" given the right condition, for loops serve a different purpose -- iterating a fixed number of times. For loops in Python expect an iterable object -- something that Python can iterate over, such as a list which Python can go through number by number -- to control the number of iterations. The example below is "equivalent" to the while loop in the previous example."""
-    )
+    mo.md(r"""Unlike while loops, which can theoretically run "forever" given the right condition, for loops serve a different purpose -- iterating a fixed number of times. For loops in Python expect an iterable object -- something that Python can iterate over, such as a list which Python can go through number by number -- to control the number of iterations. The example below is "equivalent" to the while loop in the previous example.""")
     return
 
 
 @app.cell
 def _():
     for i_1 in range(0, 5):
-
         print("i:", i_1)
     return (i_1,)
 
@@ -362,13 +341,9 @@ def _():
 @app.cell
 def _():
     char_list = [1, 6, "a"]
-
     word = ""
-
     for element in char_list:
-
         word = word + str(element)
-
     print("word:", word)
     return char_list, element, word
 
@@ -400,26 +375,18 @@ def _():
         "Twix",
         "Almond Joy",
     ]
-
     print("Loop without break statement.")
-
     for candy in candies:
-
         print(candy)
-
     print("\nLoop with break statement.")  # '\n' denotes a new line
-
     for candy in candies:
-
         print(candy)
-
         if candy == "Kit-Kat":
-
             break
     return candies, candy
 
 
-@app.cell(hide_code=True)
+@app.cell
 def _():
     candies_1 = [
         "Skittles",
@@ -432,32 +399,21 @@ def _():
     ]
 
     print("Same Loop as above but with continue instead of break statement.")
-
     for candy_1 in candies_1:
-
         print(candy_1)
-
         if candy_1 == "Kit-Kat":
-
             continue
-
     print("\nLoop that skips over every-other candy.")
-
     for i_2 in range(len(candies_1)):
-
         if i_2 % 2 == 1:
-
             continue
-
         print(candies_1[i_2])
     return candies_1, candy_1, i_2
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""In the first loop, the `continue` statement is at the end of the loop and will not skip anything, thus printing all the candies. However, in the second loop, the `continue` will potentially skip over the print statement. **Notice how the continue statement enabled us to skip over every other candy.**"""
-    )
+    mo.md(r"""In the first loop, the `continue` statement is at the end of the loop and will not skip anything, thus printing all the candies. However, in the second loop, the `continue` will potentially skip over the print statement. **Notice how the continue statement enabled us to skip over every other candy.**""")
     return
 
 
@@ -489,13 +445,9 @@ def _(mo):
 @app.cell
 def _():
     lst = []
-
     for i_3 in range(11):
-
         if i_3 % 2 == 0:
-
             lst = lst + [i_3**2]
-
     print(lst)
     return i_3, lst
 
@@ -503,7 +455,6 @@ def _():
 @app.cell
 def _():
     lst_1 = [i**2 for i in range(11) if i % 2 == 0]
-
     print(lst_1)
     return (lst_1,)
 
@@ -550,9 +501,7 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""**<span style="color:red">Run the cell below to import the packages needed to complete this lab.</span>**"""
-    )
+    mo.md(r"""**<span style="color:red">Run the cell below to import the packages needed to complete this lab.</span>**""")
     return
 
 
@@ -588,11 +537,8 @@ def _(mo):
 @app.cell
 def _(np):
     py_lst = [1, 2, 3, 4]
-
     np_arr = np.array(py_lst)
-
     print("Python list:", py_lst)
-
     print("NumPy array:", np_arr)
     return np_arr, py_lst
 
@@ -600,13 +546,9 @@ def _(np):
 @app.cell
 def _(np):
     np_arr_1 = np.empty([4, 4], dtype=np.int64)
-
     for i_4 in range(4):
-
         for j in range(4):
-
             np_arr_1[i_4, j] = i_4 + j
-
     print(np_arr_1)
     return i_4, j, np_arr_1
 
@@ -614,11 +556,8 @@ def _(np):
 @app.cell
 def _(np):
     np_zeros = np.zeros([5, 5])
-
     np_id = np.eye(5)
-
     print("np_zeros:\n", np_zeros)
-
     print("\nnp_id:\n", np_id)
     return np_id, np_zeros
 
@@ -626,28 +565,19 @@ def _(np):
 @app.cell
 def _(np):
     """numpy.linspace() is useful when you know the number of divisions over a certain range you want,
-
     i.e., you want to divide the range [0-9] into 10 equal divisions.
-
     """
-
     np_arr1 = np.linspace(0, 9, 10)
-
     print("np_arr1:", np_arr1)
-
     "numpy.arange() is useful when you know how far away each division is from one another, a.k.a. the step size.\nYou want to start at 0 and get every number that is 1 away from the previous number until you get to 9.\n"
-
     np_arr2 = np.arange(0, 10, 1)
-
     print("np_arr2:", np_arr2)
     return np_arr1, np_arr2
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""**Note:** Dimensions in NumPy are always provided as a list/tuple. You should be able to see this in the usage of functions such as `zeros`, `empty`, `ones`, `reshape`, etc."""
-    )
+    mo.md(r"""**Note:** Dimensions in NumPy are always provided as a list/tuple. You should be able to see this in the usage of functions such as `zeros`, `empty`, `ones`, `reshape`, etc.""")
     return
 
 
@@ -666,19 +596,12 @@ def _(mo):
 @app.cell
 def _(np):
     lst_2 = [1, 2, 3]
-
     arr = np.eye(3)
-
     lst2 = lst_2 + lst_2
-
     arr2 = arr + arr
-
     print("lst:", lst_2)
-
     print("lst + lst =", lst2)
-
     print("\narr:\n", arr)
-
     print("arr + arr =\n", arr2)
     return arr, arr2, lst2, lst_2
 
@@ -701,31 +624,23 @@ def _(mo):
 @app.cell
 def _(np):
     simple_arr = np.arange(0, 100, 1)
-
     print("\nFirst ten elements of simple_arr:", simple_arr[:10])
-
     print("\nLast ten elements of simple_arr:", simple_arr[-10:])
-
     print("\nElements 16-25 of simple_arr:", simple_arr[16:26])
     return (simple_arr,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""**<span style="color:red">Slicing includes the start index and excludes the end index, i.e. `simple_arr[16:26]` means to extract the values in `simple_arr` at indices in the range `[16,26)` which is the same as `[16,25]` since indices can only be integers.</span>**"""
-    )
+    mo.md(r"""**<span style="color:red">Slicing includes the start index and excludes the end index, i.e. `simple_arr[16:26]` means to extract the values in `simple_arr` at indices in the range `[16,26)` which is the same as `[16,25]` since indices can only be integers.</span>**""")
     return
 
 
 @app.cell
 def _(np):
     simple_arr_1 = np.arange(0, 20, 1)
-
     print("\nEvery-other element of simple_arr, starting from 0:", simple_arr_1[::2])
-
     print("\nEvery-third element of simple_arr, starting from 0:", simple_arr_1[::3])
-
     print(
         "\nEvery-other element of simple_arr, starting from 10-16:",
         simple_arr_1[10:16:2],
@@ -736,19 +651,12 @@ def _(np):
 @app.cell
 def _(np):
     i_5 = np.array(range(25), dtype=np.int64).reshape([5, 5])
-
     print("i:\n", i_5)
-
     print("\nFirst row of i:", i_5[0])
-
     print("\nFirst column of i:", i_5[:, 0])
-
     print("\nRows 1-3 of i:\n", i_5[1:4])
-
     print("\nColumns 1-3 of i:\n", i_5[:, 1:4])
-
     print("\nTop left 3x3 of i:\n", i_5[:3, :3])
-
     print("\nEvery-other column of i:\n", i_5[:, ::2])
     return (i_5,)
 
@@ -756,17 +664,11 @@ def _(np):
 @app.cell
 def _(np):
     j_1 = np.zeros([5, 5])
-
     print("j (5x5 NumPy array of all zeros):\n", j_1)
-
     inner = np.ones([3, 3])
-
     print("\ninner (3x3 Numpy array of all ones):\n", inner)
-
     j_1[1:4, 1:4] = inner
-
     print("\nj:\n", j_1)
-
     print(
         "\n Notice how the values of inner are assigned to the 3x3 slice at the center of j!"
     )
@@ -794,7 +696,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(
         r"""
@@ -809,13 +711,9 @@ def _(mo):
 @app.cell
 def _(np):
     test_arr = np.zeros([15, 189])
-
     print("Shape of test_arr:", test_arr.shape)
-
     print("Rows in test_arr:", test_arr.shape[0])
-
     print("Cols in test_arr:", test_arr.shape[1])
-
     print("Number of elements in test_arr:", test_arr.size)
     return (test_arr,)
 
@@ -823,21 +721,13 @@ def _(np):
 @app.cell
 def _(np):
     test_arr_1 = np.array(range(16), dtype=np.int64)
-
     print("\ntest_arr:", test_arr_1)
-
     print("Shape of test_arr:", test_arr_1.shape)
-
     test_arr_4x4 = test_arr_1.reshape([4, 4])
-
     print("\nReshaped test_arr:\n", test_arr_4x4)
-
     print("Shape of test_arr_4x4:", test_arr_4x4.shape)
-
     test_arr_vec = test_arr_4x4.reshape(test_arr_4x4.size)
-
     print("\ntest_arr back as a vector:", test_arr_vec)
-
     print("Shape of test_arr_vec:", test_arr_vec.shape)
     return test_arr_1, test_arr_4x4, test_arr_vec
 
@@ -858,13 +748,9 @@ def _(mo):
 @app.cell
 def _(np):
     norm = np.array(range(16), dtype=np.int64).reshape([4, 4])
-
     print("\nnorm:\n", norm)
-
     norm_transpose = np.transpose(norm)
-
     print("\nnorm_transpose:\n", norm_transpose)
-
     print("\nnorm easy transpose:\n", norm.T)
     return norm, norm_transpose
 
@@ -872,29 +758,18 @@ def _(np):
 @app.cell
 def _(np):
     i_6 = np.eye(4)
-
     print("\ni:\n", i_6)
-
     i_inv = np.linalg.inv(i_6)
-
     print("\ni_inv:\n", i_inv)
-
     print("\nAs expected, i == inv(i).")
-
     j_2 = np.array([[0, 1, 0, 0], [2, 0, 0, 0], [0, 0, 0, 3], [0, 0, 4, 0]])
-
     print("\nj:\n", j_2)
-
     j_inv = np.linalg.inv(j_2)
-
     print("\nj_inv:\n", j_inv)
-
     print(
         "\nMultiplying an invertible matrix with its inverse gives us the identity matrix.\n"
     )
-
     print("\nj*inv(j):\n", np.dot(j_2, j_inv))
-
     print("\nThus, as expected, j*inv(j) == i.")
     return i_6, i_inv, j_2, j_inv
 
@@ -902,41 +777,23 @@ def _(np):
 @app.cell
 def _(np):
     a = np.array([[2, 3], [4, 5]])
-
     print("\na:\n", a)
-
     b = np.array([[1, 2], [0, 2]])
-
     print("\nb:\n", b)
-
     print("\nMatrix multiplication.")
-
     c = np.dot(a, b)
-
     print("a*b:\n", c)
-
     print("\nOrder matters in numpy.dot()!")
-
     d = np.dot(b, a)
-
     print("b*a:\n", d)
-
     print("Notice a*b != b*a.")
-
     print("\nNesting numpy.dot() to perform repeated multiplication.")
-
     e = np.dot(b, np.dot(b, a))
-
     print("b*b*a:\n", e)
-
     f = np.array([2, 2])
-
     print("\nf:", f)
-
     print("\nnumpy.dot() can be used to multiply an array and vector too.")
-
     g = np.dot(a, f)
-
     print("a*f:", g)
     return a, b, c, d, e, f, g
 
@@ -944,19 +801,12 @@ def _(np):
 @app.cell
 def _(np):
     a_1 = np.array([[2, 3], [4, 5]])
-
     print("\na:\n", a_1)
-
     b_1 = np.array([[1, 2], [0, 2]])
-
     print("\nb:\n", b_1)
-
     c_1 = np.concatenate([a_1, b_1], axis=0)
-
     print('\nAppend b to the "bottom" of a:\n', c_1)
-
     d_1 = np.concatenate([a_1, b_1], axis=1)
-
     print('\nAppend b to the "right" of a:\n', d_1)
     return a_1, b_1, c_1, d_1
 
@@ -964,23 +814,14 @@ def _(np):
 @app.cell
 def _(np):
     a_2 = np.array([[2, 3], [4, 5]])
-
     print("\na:\n", a_2)
-
     b_2 = np.array([[1, 2], [0, 2]])
-
     print("\nb:\n", b_2)
-
     c_2 = np.vstack([a_2, b_2])
-
     print("\nvstack a and b:\n", c_2)
-
     print("Notice this is equivalent to concatenate with axis=0.")
-
     d_2 = np.hstack([a_2, b_2])
-
     print("\nhstack a and b:\n", d_2)
-
     print("Notice this is equivalent to concatenate with axis=1.")
     return a_2, b_2, c_2, d_2
 
@@ -999,11 +840,8 @@ def _(mo):
 @app.cell
 def _(np):
     a_3 = 16.5
-
     print("a:", a_3)
-
     print("floor of a:", np.floor(a_3))
-
     print("ceiling of a:", np.ceil(a_3))
     return (a_3,)
 
@@ -1011,15 +849,10 @@ def _(np):
 @app.cell
 def _(np):
     a_4 = np.array([0, 1, 2, 3, 16, 3, 2, 1, 0])
-
     print("a:", a_4)
-
     print("max of a =", np.max(a_4))
-
     print("min of a =", np.min(a_4))
-
     print("index of max value of a =", np.argmax(a_4))
-
     print("index of min value of a =", np.argmin(a_4))
     return (a_4,)
 
@@ -1046,7 +879,6 @@ def _(mo):
 @app.cell
 def _():
     # magic command not supported in marimo; please file an issue to add support
-
     # %run autograder.py
     return
 
@@ -1072,7 +904,7 @@ app._unparsable_cell(
     def q1(A,b):
         return func(A,b)
     """,
-    name="_",
+    name="_"
 )
 
 
@@ -1100,60 +932,22 @@ def _(mo):
 def _():
     def q2(A):
         """
-
-
         Input:
-
-
         A - MxN NumPy array
-
-
-
-
-
         Output:
-
-
         Returns an NumPy array that consists of every entry of A that has an even row index and has an odd column index.
-
-
-
-
-
         Example:
-
-
         A = np.array([[ 1, 2, 3, 4, 5]
-
-
                       [ 6, 7, 8, 9,10]
-
-
                       [11,12,13,14,15]
-
-
                       [16,17,18,19,20]
-
-
                       [21,22,23,24,25]])
-
-
-
-
-
         Output = np.array([[ 2, 4]
-
-
                            [12,14]
-
-
                            [22,24]])
-
-
         """
 
         # YOUR CODE HERE
-
     return (q2,)
 
 
@@ -1185,72 +979,24 @@ def _(mo):
 def _():
     def q3(A):
         """
-
-
         Input:
-
-
         A - MxN NumPy array
-
-
-
-
-
         Output:
-
-
         For each row in A, determine the index corresponding to its maximum value. Then, return the greatest such index.
-
-
-
-
-
         Example:
-
-
         A = np.array([[0, 1, 0, 0]
-
-
                       [1, 0, 0, 0]
-
-
                       [0, 0, 0, 0]
-
-
                       [0, 0, 1, 0]])
-
-
-
-
-
         Output = 2
-
-
-
-
-
         In row 0, we have maximum value 1 at index 1.
-
-
         In row 1, we have maximum value 1 at index 0.
-
-
         In row 2, we have maximum value 0 at index 0 (since that's the first occurence of 0).
-
-
         In row 3, we have maximum value 1 at index 2.
-
-
         Thus, the output should be the maximum index, which is 2.
-
-
-
-
-
         """
 
         # YOUR CODE HERE
-
     return (q3,)
 
 
@@ -1276,71 +1022,29 @@ def _(mo):
     return
 
 
-@app.cell(hide_code=True)
+@app.cell
 def _():
     def q4(A, B):
         """
-
-
         Inputs:
-
-
         A - MxN NumPy array
-
-
         B - MxP NumPy array
-
-
-
-
-
         Output:
-
-
         Returns an Mx(P+(N/2)) NumPy array where every-other column of A is added to the right side of B in order,
-
-
         starting from index 0.
-
-
-
-
-
         Example:
-
-
         A = np.array([[1,0,0,2]
-
-
                       [0,1,0,2]
-
-
                       [0,0,1,2]])
-
-
         B = np.array([[1,2,3]
-
-
                       [4,5,6]
-
-
                       [7,8,9]])
-
-
-
         Output = np.array([[1,2,3,1,0]
-
-
                            [4,5,6,0,0]
-
-
                            [7,8,9,0,1]])
-
-
         """
 
         # YOUR CODE HERE
-
     return (q4,)
 
 
@@ -1368,42 +1072,16 @@ def _(mo):
 def _():
     def q5(N):
         """
-
-
         Input:
-
-
         N - number of elements in u and v.
-
-
-
-
-
         Output:
-
-
         Returns the sequence: np.array([1*2017,2*2018,...,N*(2017+N-1)])
-
-
-
-
-
         Example:
-
-
         N = 5
-
-
-
-
-
         Output = np.array([2017, 4036, 6057, 8080, 10105])
-
-
         """
 
         # YOUR CODE HERE
-
     return (q5,)
 
 
@@ -1429,48 +1107,18 @@ def _(mo):
 def _():
     def q6(v, N=10):
         """
-
-
         Input:
-
-
         v = NumPy vector
-
-
         N = number of steps to shift v to the right
-
-
-
-
-
         Output:
-
-
         Returns v shifted to the right by N steps.
-
-
-
-
-
         Example:
-
-
         v = np.array([0,1,2,3,4,5])
-
-
         N = 3
-
-
-
-
-
         Output = np.array([3,4,5,0,1,2])
-
-
         """
 
         # YOUR CODE HERE
-
     return (q6,)
 
 
@@ -1496,35 +1144,18 @@ def _(mo):
 def _(np):
     def q7(I=np.eye(10), N=4):
         """
-
         Input:
-
         I - MxM NumPy array representing the identity matrix
-
         N - number of rows and columns to cut from I
-
-
-
         Output:
-
         Returns an (M-N)x(M-N) NumPy identity array.
-
-
-
         Example:
-
         I = np.eye(10)
-
         N = 8
-
-
-
         Output = np.array([[1,0]
 
                            [0,1]])
-
         """
-
     return (q7,)
 
 
@@ -1554,48 +1185,18 @@ def _(mo):
 def _():
     def q8(A):
         """
-
-
         Input:
-
-
         A - NxN NumPy array
-
-
-
-
-
         Output:
-
-
         Returns a Python list containing the diagonal of A sorted in descending order.
-
-
-
-
-
         Example:
-
-
         A = np.array([[1,2,3]
-
-
                       [4,5,6]
-
-
                       [7,8,9]])
-
-
-
-
-
         Output = [9,5,1]
-
-
         """
 
         # YOUR CODE HERE
-
     return (q8,)
 
 
@@ -1621,72 +1222,26 @@ def _(mo):
 def _():
     def q9(A, B, p):
         """
-
-
         Input:
-
-
         A - MxN NumPy array
-
-
         B - NxM NumPy array
-
-
         p - number of rows from A to concatenate with number of columns from B
-
-
-
-
-
         Output:
-
-
         Returns the side-by-side concatenation of the first p rows of A with the transpose of the last p columns of B.
-
-
-
-
-
         Example:
-
-
         A = np.array([[1,1,1]
-
-
                       [1,1,1]
-
-
                       [1,1,1]
-
-
                       [1,1,1]])
-
-
         B = np.array([[1,2,3,4]
-
-
                       [5,6,7,8]
-
-
                       [9,10,11,12]])
-
-
         p = 2
-
-
-
-
-
         Output = np.array([[1,1,1,3,7,11]
-
-
                            [1,1,1,4,8,12]])
-
-
         """
 
         # YOUR CODE HERE
-
     return (q9,)
 
 
@@ -1720,75 +1275,27 @@ def _(mo):
 def _():
     def q10(A, B):
         """
-
-
         Input:
-
-
         A - MxN NumPy array
-
-
         B - YxZ NumPy array
-
-
-
-
-
         Output:
-
-
         Returns the zero-padded versions of each array such that they are of equivalent dimensions.
-
-
         Padding is added to the bottom and right.
-
-
-
-
-
         Example:
-
-
         A = np.array([[1,2,3]
-
-
                       [4,5,6]])
-
-
         B = np.array([[1,1]
-
-
                       [1,1]
-
-
                       [1,1]])
-
-
-
-
-
         Output = np.array([[1,2,3]
-
-
                            [4,5,6]
-
-
                            [0,0,0]]),
-
-
                   np.array([[1,1,0]
-
-
                             [1,1,0]
-
-
                             [1,1,0]])
-
-
         """
 
         # YOUR CODE HERE
-
     return (q10,)
 
 

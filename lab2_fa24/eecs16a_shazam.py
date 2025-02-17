@@ -244,24 +244,15 @@ def _(mo):
 @app.cell
 def _():
     def centered_magnitude_spectrum(sig):
-
         """
-
         Inputs:
-
         sig - a generic iterable signal of floating point numbers
-
-
+        
         Output (np.ndarray):
-
         Returns a centered magnitude spectrum of the given signal. 
-
         That is, the magnitude of the DTFT of the provided signal 
-
         after shifting from [0,2pi] to [-pi,pi].
-
         """
-
 
         # TODO YOUR CODE HERE
     return (centered_magnitude_spectrum,)
@@ -320,31 +311,18 @@ def _(mo):
 @app.cell
 def _(centered_magnitude_spectrum, coldplay, fs, np, plt):
     coldplay_freqs_1 = centered_magnitude_spectrum(coldplay[:fs])
-
     coldplay_freqs_2 = centered_magnitude_spectrum(coldplay[fs:2 * fs])
-
     coldplay_freqs_3 = centered_magnitude_spectrum(coldplay[2 * fs:3 * fs])
-
     coldplay_freqs_4 = centered_magnitude_spectrum(coldplay[3 * fs:4 * fs])
-
     _freqs = np.linspace(-fs / 2, fs / 2, len(coldplay_freqs_1))
-
     sigs = [coldplay_freqs_1, coldplay_freqs_2, coldplay_freqs_3, coldplay_freqs_4]
-
     strs = ['1st', '2nd', '3rd', '4th']
-
     plt.figure(figsize=(16, 10), dpi=200)
-
     for i in range(1, 5):
-
         plt.subplot(2, 2, i)
-
         plt.plot(_freqs, sigs[i - 1])
-
         plt.xlim([-5000.0, 5000.0])
-
         plt.ylim([0, 1.1 * np.array(sigs).max()])
-
         plt.title('DFT magnitude of {} second of Viva La Vida'.format(strs[i - 1]))
 
     plt.show()
@@ -399,7 +377,7 @@ def _(mo):
 
         Notice the differences between when the speaker takes a breath and when the speaker is actually speaking. A single DFT wouldn't be able to separate this!
 
-        ![speech-spectrogram.png](./speech-spectrogram.png)
+        ![speech-spectrogram.png](./public/speech-spectrogram.png)
         """
     )
     return
@@ -410,7 +388,7 @@ def _(mo):
     mo.md(
         r"""
         Remember that this spectrogram isn't new data. It is simply a new view of the existing time-domain data we already have. The image below ([source](https://www.tek.com/de/blog/spectrogram-types-the-many-faces-of-the-spectrogram)) shows this in a visual form.
-        ![spectrogram_display.png](spectrogram_display.jpg)
+        ![spectrogram_display.png](./public/spectrogram_display.jpg)
         """
     )
     return
@@ -434,11 +412,8 @@ def _(mo):
 @app.cell
 def _(np):
     n = np.linspace(0, 1, 1000)
-
     x1 = np.sin(2 * np.pi * 100 * n)
-
     x2 = np.sin(2 * np.pi * 400 * n)
-
     x3 = np.concatenate((x1, x2))
     return n, x1, x2, x3
 
@@ -452,37 +427,21 @@ def _(mo):
 @app.cell
 def _(centered_magnitude_spectrum, np, plt, x1, x2, x3):
     freqs_1 = centered_magnitude_spectrum(x1)
-
     freqs_2 = centered_magnitude_spectrum(x2)
-
     freqs_3 = centered_magnitude_spectrum(x3)
-
     _fig, _axs = plt.subplots(1, 3, figsize=(16, 4), dpi=200)
-
     _axs[0].plot(np.linspace(-500, 500, len(freqs_1)), freqs_1)
-
     _axs[0].set_ylabel('DFT Magnitude')
-
     _axs[0].set_xlabel('Frequency [Hz]')
-
     _axs[0].set_title('100 Hz Signal')
-
     _axs[1].plot(np.linspace(-500, 500, len(freqs_2)), freqs_2)
-
     _axs[1].set_ylabel('DFT Magnitude')
-
     _axs[1].set_xlabel('Frequency [Hz]')
-
     _axs[1].set_title('400 Hz Signal')
-
     _axs[2].plot(np.linspace(-500, 500, len(freqs_3)), freqs_3)
-
     _axs[2].set_ylabel('DFT Magnitude')
-
     _axs[2].set_xlabel('Frequency [Hz]')
-
     _axs[2].set_title('100 Hz and 400 Hz Signal')
-
     plt.show()
     return freqs_1, freqs_2, freqs_3
 
@@ -542,11 +501,8 @@ def _(mo):
 @app.cell
 def _(np, wavfile):
     fs_1, coldplay_1 = wavfile.read('VivaLaVida.wav')
-
     coldplay_1 = np.mean(coldplay_1, axis=1)
-
     fs_1, killers = wavfile.read('MrBrightside.wav')
-
     killers = np.mean(killers, axis=1)
     return coldplay_1, fs_1, killers
 
@@ -602,37 +558,22 @@ def _(mo):
 @app.cell
 def _():
     def compute_spectrogram(fs, audio, epsilon_db_constant):
-
         """
-
         Input:
-
         fs - the sampling frequency of the audio, in Hertz (Hz)
-
         audio - the full audio to compute the spectrogram of; either coldplay or killers
-
         epsilon_db_constant - a small positive constant to ensure there are no divide by zero errors
-
-
+       
         Output (np.ndarray, np.ndarray, np.ndarray):
-
         Returns a scipy spectrogram for the given audio (in decibels) with three components:
-
          - a NumPy array of sample frequencies
-
          - a NumPy array of segment times
-
          - the spectrogram itself
-
-
+        
         See:
-
         scipy.signal.spectrogram
-
         numpy.log10
-
         """
-
 
         # TODO YOUR CODE HERE
     return (compute_spectrogram,)
@@ -689,7 +630,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""<span style="color:blue">**A:** (TODO) </span>""")
     return
@@ -766,41 +707,25 @@ def _(mo):
 @app.cell
 def _(_______________):
     def peak_finding(spect, neighborhood_size=2 * 25 + 1, amp_thresh=40):
-
         """
-
         Input:
-
         spect - the spectrogram of an unknown audio track to find peaks from
-
         neighborhood_size - the size of the maximum filter
-
         amp_thresh - amplitude threshold to include peaks in result
-
-
+        
         Output (np.ndarray, np.ndarray):
-
         Returns a tuple of the peak indices on the frequency 
-
         and time axes (each as NumPy arrays) for the provided spectrograph.
-
-
+        
         See:
-
         maximum_filter
-
         np.nonzero
-
         """
 
         max_spect = _______________
-
         mask = _______________ == _______________
-
         mask = mask & (spect > amp_thresh)
-
         freq_indices, time_indices = _______________
-
     freq_indices, time_indices = peak_finding(_______________)
     return freq_indices, peak_finding, time_indices
 
@@ -861,44 +786,23 @@ def _(mo):
 @app.cell
 def _(_______________, hashing, np):
     def fingerprint(fs, audio, neighborhood_size=2*25+1, amp_thresh=40):
-
         """
-
         Input:
-
         fs - the sampling frequency of the audio, in Hertz (Hz)
-
         audio - the full audio to fingerprint; either coldplay or killers
-
         neighborhood_size - the size of the maximum filter
-
         amp_thresh - amplitude threshold to include peaks in result
-
-
+        
         Output (list[str, int]):
-
         A list of hashes representing the "fingerprint" of the given audio.
-
         """
-
         audio = np.mean(audio, axis=1)
-
-
         # Compute the spectrogram of the single channel audio
-
         f1, t1, spect = _______________  # TODO YOUR CODE HERE
-
-
         # Find the peaks (Use function from Q2a)
-
         freq_indices, time_indices = _______________  # TODO YOUR CODE HERE
-
-
         # Compute the hashes
-
         hashes = hashing(_______________, _______________, _______________, _______________)  # TODO YOUR CODE HERE
-
-
         # Return list of hashes
     return (fingerprint,)
 
@@ -931,21 +835,13 @@ def _(mo):
 @app.cell
 def _(fingerprint, pd):
     def detect(fs, audio):
-
         db = pd.read_csv("database.csv", header=None, names=["Hash", "time", "Song"])
-
-
         hashes = fingerprint(fs, audio)
-
         db_matches = db[db.Hash.isin(map(lambda x: x[0], hashes))]
-
         if len(db_matches) == 0:
-
             print("No Matches")
 
-
         counts = db_matches.groupby("Song").size()
-
         counts = counts / counts.sum()
     return (detect,)
 
@@ -967,25 +863,16 @@ def _(mo):
 @app.cell
 def _():
     def get_20_second_segment(fs, audio):
-
         """
-
         Input:
-
         fs - the sampling frequency of the audio, in Hertz (Hz)
-
         audio - the full audio to get 20 seconds of; either coldplay or killers
-
-
+        
         Output:
-
         A 20 second segment anywhere within the given audio track.
 
-
         Example:
-
         get_20_second_segment(killers) == killers[X seconds:(X + 20 seconds)]
-
         """
 
 
@@ -999,7 +886,7 @@ def _(autograder, get_20_second_segment):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""You will now use this function to write tests for your Shazam system!""")
     return
@@ -1020,7 +907,6 @@ def _(mo):
 @app.cell
 def _(wavfile):
     fs_2, coldplay_2 = wavfile.read('VivaLaVida.wav')
-
     fs_2, killers_1 = wavfile.read('MrBrightside.wav')
     return coldplay_2, fs_2, killers_1
 
@@ -1028,36 +914,22 @@ def _(wavfile):
 @app.cell
 def _():
     def basic_detect_test(fs, audio):
-
         """
-
         Input:
-
         fs - the sampling frequency of the audio, in Hertz (Hz)
-
         audio - the full audio to detect against; either coldplay or killers
 
-
         Output:
-
         Returns the name of the audio track that most closely matches 
-
         a 20 second segment of the provided audio track, and a percentage confidence.
 
-
         Example:
-
         basic_detect_test(killers_fs, killers) == ('MrBrightside.wav', 100.0)
 
-
         See also:
-
         get_20_second_segment
-
         detect
-
         """
-
 
         # TODO YOUR CODE HERE
     return (basic_detect_test,)
@@ -1089,32 +961,19 @@ def _(mo):
 @app.cell
 def _():
     NOISE_MEAN = 10000
-
     NOISE_STANDARD_DEVIATION = 10000
-
-
     def add_gaussian_noise(audio_segment):
-
         """
-
         Input:
-
         audio_segment - an audio segment from an unknown track
 
-
         Output:
-
         Returns the audio segment with added Gaussian noise.
 
-
         See:
-
         Problem description (for quantities)
-
         np.random.normal
-
         """
-
 
         # TODO YOUR CODE HERE
     return NOISE_MEAN, NOISE_STANDARD_DEVIATION, add_gaussian_noise
@@ -1123,33 +982,20 @@ def _():
 @app.cell
 def _():
     def gaussian_noise_detect_test(fs, audio_segment):
-
         """
-
         Input:
-
         fs - the sampling frequency of the audio, in Hertz (Hz)
-
         audio_segment - an audio segment from an unknown track WITHOUT Gaussian noise
 
-
         Output:
-
         Returns the name of the audio track that most closely matches 
-
         a 20 second segment of the provided audio track, WITH added 
-
         Gaussian noise and a percentage confidence.
 
-
         See:
-
         add_gaussian_noise
-
         detect
-
         """
-
 
         # TODO YOUR CODE HERE
     return (gaussian_noise_detect_test,)
@@ -1161,7 +1007,7 @@ def _(autograder, gaussian_noise_detect_test):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""Our version of Shazam should still be able to detect the song. How does it sound, though?""")
     return
@@ -1173,7 +1019,7 @@ def _(add_gaussian_noise, coldplay_2, fs_2, get_20_second_segment, ipd):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""It sounds terrible, and we can barely make out the music! Yet, our system still correctly identified it as *Viva La Vida*!""")
     return
@@ -1198,18 +1044,14 @@ def _(mo):
 @app.cell
 def _(coldplay_2, fs_2):
     unknown_segment = coldplay_2[10 * fs_2:30 * fs_2].copy()
-
     unknown_segment[:2 * fs_2] = 0
-
     unknown_segment[6 * fs_2:8 * fs_2] = 0
-
     unknown_segment[16 * fs_2:20 * fs_2] = 0
-
     unknown_segment[2 * fs_2:4 * fs_2] = 0
     return (unknown_segment,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""Let's hear how the song sounds with these portions removed.""")
     return
@@ -1242,13 +1084,9 @@ def _(mo):
 @app.cell
 def _(fs_2, killers_1):
     unknown_segment_1 = killers_1[10 * fs_2:30 * fs_2].copy()
-
     unknown_segment_1[:2 * fs_2] = 0
-
     unknown_segment_1[6 * fs_2:8 * fs_2] = 0
-
     unknown_segment_1[16 * fs_2:20 * fs_2] = 0
-
     unknown_segment_1[2 * fs_2:4 * fs_2] = 0
     return (unknown_segment_1,)
 
@@ -1329,20 +1167,12 @@ def _(mo):
 @app.cell
 def _(fingerprint, wavfile):
     import csv
-
     def add_to_db(filename):
-
         fs, audio = wavfile.read(filename)
-
         hashes = fingerprint(audio, fs)
-
         with open('database.csv', mode='a') as db_file:
-
             db_writer = csv.writer(db_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-
             for hash_pair in hashes:
-
                 db_writer.writerow([hash_pair[0], hash_pair[1], filename])
     return add_to_db, csv
 
@@ -1356,7 +1186,6 @@ def _(mo):
 @app.cell
 def _(___, add_to_db):
     my_wav_filepath = ___  # Path to any WAV file you want to add to the database
-
     add_to_db(my_wav_filepath)
     return (my_wav_filepath,)
 
@@ -1370,7 +1199,6 @@ def _(mo):
 @app.cell
 def _(___, detect, wavfile):
     fs_3, audio = wavfile.read(___)
-
     detect(fs_3, audio)
     return audio, fs_3
 
