@@ -8,11 +8,14 @@
 #     "scipy==1.15.1",
 #     "marimo",
 # ]
+# [tool.marimo.runtime]
+# auto_instantiate = false
+# output_max_bytes = 10_000_000
 # ///
 
 import marimo
 
-__generated_with = "0.11.5"
+__generated_with = "0.11.7"
 app = marimo.App(width="medium")
 
 
@@ -55,7 +58,7 @@ def _(mo):
 
         ## Dependencies
 
-        To get started, you'll need to install [Pandas](https://pandas.pydata.org/docs/getting_started/install.html). And, of course, you'll also need NumPy, SciPy, and Matplotlib if you don't already have them.
+        This marimo notebook depends on [Pandas](https://pandas.pydata.org/docs/getting_started/install.html) and a few other packages. Luckily, marimo installs these automatically for you.
         """
     )
     return
@@ -191,8 +194,8 @@ def _(mo):
 @app.cell
 def _(coldplay, fs, plt):
     plt.figure(figsize=(16, 4), dpi=200)
-    coldplay_labels = [x / fs for x in range(fs*10)]
-    plt.plot(coldplay_labels, coldplay[:fs*10])
+    coldplay_labels = [x / fs for x in range(fs * 10)]
+    plt.plot(coldplay_labels, coldplay[: fs * 10])
     plt.xlabel("Time [s]")
     plt.ylabel("Magnitude")
     plt.title("Time-domain visualization of first 10 seconds of Viva La Vida")
@@ -207,8 +210,8 @@ def _(mo):
 
 
 @app.cell
-def _(ipd):
-    ipd.Audio("VivaLaVida.wav")
+def _(mo):
+    mo.audio("VivaLaVida.wav")
     return
 
 
@@ -247,10 +250,10 @@ def _():
         """
         Inputs:
         sig - a generic iterable signal of floating point numbers
-        
+
         Output (np.ndarray):
-        Returns a centered magnitude spectrum of the given signal. 
-        That is, the magnitude of the DTFT of the provided signal 
+        Returns a centered magnitude spectrum of the given signal.
+        That is, the magnitude of the DTFT of the provided signal
         after shifting from [0,2pi] to [-pi,pi].
         """
 
@@ -278,14 +281,14 @@ def _(mo):
 
 @app.cell
 def _(centered_magnitude_spectrum, coldplay, fs, np, plt):
-    coldplay_cropped = coldplay[:10 * fs]
+    coldplay_cropped = coldplay[: 10 * fs]
     coldplay_freqs = centered_magnitude_spectrum(coldplay_cropped)
     plt.figure(figsize=(16, 4), dpi=200)
     _freqs = np.linspace(-fs / 2, fs / 2, len(coldplay_freqs))
     plt.plot(_freqs, coldplay_freqs)
-    plt.xlabel('Frequency [Hz]')
-    plt.ylabel('Magnitude')
-    plt.title('DFT of first 10 seconds of Viva La Vida')
+    plt.xlabel("Frequency [Hz]")
+    plt.ylabel("Magnitude")
+    plt.title("DFT of first 10 seconds of Viva La Vida")
     plt.gca()
     return coldplay_cropped, coldplay_freqs
 
@@ -311,19 +314,19 @@ def _(mo):
 @app.cell
 def _(centered_magnitude_spectrum, coldplay, fs, np, plt):
     coldplay_freqs_1 = centered_magnitude_spectrum(coldplay[:fs])
-    coldplay_freqs_2 = centered_magnitude_spectrum(coldplay[fs:2 * fs])
-    coldplay_freqs_3 = centered_magnitude_spectrum(coldplay[2 * fs:3 * fs])
-    coldplay_freqs_4 = centered_magnitude_spectrum(coldplay[3 * fs:4 * fs])
+    coldplay_freqs_2 = centered_magnitude_spectrum(coldplay[fs : 2 * fs])
+    coldplay_freqs_3 = centered_magnitude_spectrum(coldplay[2 * fs : 3 * fs])
+    coldplay_freqs_4 = centered_magnitude_spectrum(coldplay[3 * fs : 4 * fs])
     _freqs = np.linspace(-fs / 2, fs / 2, len(coldplay_freqs_1))
     sigs = [coldplay_freqs_1, coldplay_freqs_2, coldplay_freqs_3, coldplay_freqs_4]
-    strs = ['1st', '2nd', '3rd', '4th']
+    strs = ["1st", "2nd", "3rd", "4th"]
     plt.figure(figsize=(16, 10), dpi=200)
     for i in range(1, 5):
         plt.subplot(2, 2, i)
         plt.plot(_freqs, sigs[i - 1])
         plt.xlim([-5000.0, 5000.0])
         plt.ylim([0, 1.1 * np.array(sigs).max()])
-        plt.title('DFT magnitude of {} second of Viva La Vida'.format(strs[i - 1]))
+        plt.title("DFT magnitude of {} second of Viva La Vida".format(strs[i - 1]))
 
     plt.show()
     return (
@@ -431,17 +434,17 @@ def _(centered_magnitude_spectrum, np, plt, x1, x2, x3):
     freqs_3 = centered_magnitude_spectrum(x3)
     _fig, _axs = plt.subplots(1, 3, figsize=(16, 4), dpi=200)
     _axs[0].plot(np.linspace(-500, 500, len(freqs_1)), freqs_1)
-    _axs[0].set_ylabel('DFT Magnitude')
-    _axs[0].set_xlabel('Frequency [Hz]')
-    _axs[0].set_title('100 Hz Signal')
+    _axs[0].set_ylabel("DFT Magnitude")
+    _axs[0].set_xlabel("Frequency [Hz]")
+    _axs[0].set_title("100 Hz Signal")
     _axs[1].plot(np.linspace(-500, 500, len(freqs_2)), freqs_2)
-    _axs[1].set_ylabel('DFT Magnitude')
-    _axs[1].set_xlabel('Frequency [Hz]')
-    _axs[1].set_title('400 Hz Signal')
+    _axs[1].set_ylabel("DFT Magnitude")
+    _axs[1].set_xlabel("Frequency [Hz]")
+    _axs[1].set_title("400 Hz Signal")
     _axs[2].plot(np.linspace(-500, 500, len(freqs_3)), freqs_3)
-    _axs[2].set_ylabel('DFT Magnitude')
-    _axs[2].set_xlabel('Frequency [Hz]')
-    _axs[2].set_title('100 Hz and 400 Hz Signal')
+    _axs[2].set_ylabel("DFT Magnitude")
+    _axs[2].set_xlabel("Frequency [Hz]")
+    _axs[2].set_title("100 Hz and 400 Hz Signal")
     plt.show()
     return freqs_1, freqs_2, freqs_3
 
@@ -458,18 +461,18 @@ def _(plt, signal, x1, x2, x3):
     _f2, _t2, x2_freqs = signal.spectrogram(x2, fs=1000)
     f3, t3, x3_freqs = signal.spectrogram(x3, fs=1000)
     _fig, _axs = plt.subplots(1, 3, figsize=(16, 4), dpi=200)
-    _axs[0].pcolormesh(t1, f1, x1_freqs, cmap='gray', shading='auto')
-    _axs[0].set_ylabel('Frequency [Hz]')
-    _axs[0].set_xlabel('Time [sec]')
-    _axs[0].set_title('100 Hz Signal')
-    _axs[1].pcolormesh(_t2, _f2, x2_freqs, cmap='gray', shading='auto')
-    _axs[1].set_ylabel('Frequency [Hz]')
-    _axs[1].set_xlabel('Time [sec]')
-    _axs[1].set_title('400 Hz Signal')
-    _axs[2].pcolormesh(t3, f3, x3_freqs, cmap='gray', shading='auto')
-    _axs[2].set_ylabel('Frequency [Hz]')
-    _axs[2].set_xlabel('Time [sec]')
-    _axs[2].set_title('100 Hz and 400 Hz Signal')
+    _axs[0].pcolormesh(t1, f1, x1_freqs, cmap="gray", shading="auto")
+    _axs[0].set_ylabel("Frequency [Hz]")
+    _axs[0].set_xlabel("Time [sec]")
+    _axs[0].set_title("100 Hz Signal")
+    _axs[1].pcolormesh(_t2, _f2, x2_freqs, cmap="gray", shading="auto")
+    _axs[1].set_ylabel("Frequency [Hz]")
+    _axs[1].set_xlabel("Time [sec]")
+    _axs[1].set_title("400 Hz Signal")
+    _axs[2].pcolormesh(t3, f3, x3_freqs, cmap="gray", shading="auto")
+    _axs[2].set_ylabel("Frequency [Hz]")
+    _axs[2].set_xlabel("Time [sec]")
+    _axs[2].set_title("100 Hz and 400 Hz Signal")
     plt.gca()
     return f1, f3, t1, t3, x1_freqs, x2_freqs, x3_freqs
 
@@ -500,9 +503,9 @@ def _(mo):
 
 @app.cell
 def _(np, wavfile):
-    fs_1, coldplay_1 = wavfile.read('VivaLaVida.wav')
+    fs_1, coldplay_1 = wavfile.read("VivaLaVida.wav")
     coldplay_1 = np.mean(coldplay_1, axis=1)
-    fs_1, killers = wavfile.read('MrBrightside.wav')
+    fs_1, killers = wavfile.read("MrBrightside.wav")
     killers = np.mean(killers, axis=1)
     return coldplay_1, fs_1, killers
 
@@ -514,8 +517,8 @@ def _(mo):
 
 
 @app.cell
-def _(ipd):
-    ipd.Audio("MrBrightside.wav")
+def _(mo):
+    mo.audio("MrBrightside.wav")
     return
 
 
@@ -563,13 +566,13 @@ def _():
         fs - the sampling frequency of the audio, in Hertz (Hz)
         audio - the full audio to compute the spectrogram of; either coldplay or killers
         epsilon_db_constant - a small positive constant to ensure there are no divide by zero errors
-       
+
         Output (np.ndarray, np.ndarray, np.ndarray):
         Returns a scipy spectrogram for the given audio (in decibels) with three components:
          - a NumPy array of sample frequencies
          - a NumPy array of segment times
          - the spectrogram itself
-        
+
         See:
         scipy.signal.spectrogram
         numpy.log10
@@ -585,7 +588,7 @@ def _(autograder, compute_spectrogram):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""Let's have a look! Run the cell below to compute spectrograms for both *Viva La Vida* and *Mr. Brightside*, then plot their spectrograms.""")
     return
@@ -593,20 +596,24 @@ def _(mo):
 
 @app.cell
 def _(coldplay_1, compute_spectrogram, fs_1, killers, plt):
-    f1_1, t1_1, coldplay_spect = compute_spectrogram(fs_1, coldplay_1, epsilon_db_constant=1e-12)
-    _f2, _t2, killers_spect = compute_spectrogram(fs_1, killers, epsilon_db_constant=1e-12)
+    f1_1, t1_1, coldplay_spect = compute_spectrogram(
+        fs_1, coldplay_1, epsilon_db_constant=1e-12
+    )
+    _f2, _t2, killers_spect = compute_spectrogram(
+        fs_1, killers, epsilon_db_constant=1e-12
+    )
     plt.figure(figsize=(20, 10), dpi=200)
     plt.subplot(2, 1, 1)
-    plt.pcolormesh(t1_1, f1_1, coldplay_spect, cmap='jet', shading='auto')
-    plt.ylabel('Frequency [Hz]')
-    plt.xlabel('Time [sec]')
-    plt.title('Viva La Vida')
+    plt.pcolormesh(t1_1, f1_1, coldplay_spect, cmap="jet", shading="auto")
+    plt.ylabel("Frequency [Hz]")
+    plt.xlabel("Time [sec]")
+    plt.title("Viva La Vida")
     plt.colorbar()
     plt.subplot(2, 1, 2)
-    plt.pcolormesh(_t2, _f2, killers_spect, cmap='jet', shading='auto')
-    plt.ylabel('Frequency [Hz]')
-    plt.xlabel('Time [sec]')
-    plt.title('Mr. Brightside')
+    plt.pcolormesh(_t2, _f2, killers_spect, cmap="jet", shading="auto")
+    plt.ylabel("Frequency [Hz]")
+    plt.xlabel("Time [sec]")
+    plt.title("Mr. Brightside")
     plt.colorbar()
     plt.gca()
     return coldplay_spect, f1_1, killers_spect, t1_1
@@ -712,11 +719,11 @@ def _(_______________):
         spect - the spectrogram of an unknown audio track to find peaks from
         neighborhood_size - the size of the maximum filter
         amp_thresh - amplitude threshold to include peaks in result
-        
+
         Output (np.ndarray, np.ndarray):
-        Returns a tuple of the peak indices on the frequency 
+        Returns a tuple of the peak indices on the frequency
         and time axes (each as NumPy arrays) for the provided spectrograph.
-        
+
         See:
         maximum_filter
         np.nonzero
@@ -726,11 +733,13 @@ def _(_______________):
         mask = _______________ == _______________
         mask = mask & (spect > amp_thresh)
         freq_indices, time_indices = _______________
+
+
     freq_indices, time_indices = peak_finding(_______________)
     return freq_indices, peak_finding, time_indices
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""Let's run the next cell and see where our peaks are! We'll label them with black dots for clarity.""")
     return
@@ -739,11 +748,13 @@ def _(mo):
 @app.cell
 def _(coldplay_spect, f1_1, freq_indices, plt, t1_1, time_indices):
     plt.figure(figsize=(16, 6), dpi=200)
-    plt.scatter(t1_1[time_indices], f1_1[freq_indices], zorder=99, color='k')
-    plt.pcolormesh(t1_1, f1_1, coldplay_spect, zorder=0, cmap='jet', shading='auto')
-    plt.ylabel('Frequency [Hz]')
-    plt.xlabel('Time [sec]')
-    plt.title('Spectrogram Peaks (for Viva La Vida)')
+    plt.scatter(t1_1[time_indices], f1_1[freq_indices], zorder=99, color="k")
+    plt.pcolormesh(
+        t1_1, f1_1, coldplay_spect, zorder=0, cmap="jet", shading="auto"
+    )
+    plt.ylabel("Frequency [Hz]")
+    plt.xlabel("Time [sec]")
+    plt.title("Spectrogram Peaks (for Viva La Vida)")
     plt.xlim([0, 60])
     plt.gca()
     return
@@ -785,14 +796,14 @@ def _(mo):
 
 @app.cell
 def _(_______________, hashing, np):
-    def fingerprint(fs, audio, neighborhood_size=2*25+1, amp_thresh=40):
+    def fingerprint(fs, audio, neighborhood_size=2 * 25 + 1, amp_thresh=40):
         """
         Input:
         fs - the sampling frequency of the audio, in Hertz (Hz)
         audio - the full audio to fingerprint; either coldplay or killers
         neighborhood_size - the size of the maximum filter
         amp_thresh - amplitude threshold to include peaks in result
-        
+
         Output (list[str, int]):
         A list of hashes representing the "fingerprint" of the given audio.
         """
@@ -802,7 +813,9 @@ def _(_______________, hashing, np):
         # Find the peaks (Use function from Q2a)
         freq_indices, time_indices = _______________  # TODO YOUR CODE HERE
         # Compute the hashes
-        hashes = hashing(_______________, _______________, _______________, _______________)  # TODO YOUR CODE HERE
+        hashes = hashing(
+            _______________, _______________, _______________, _______________
+        )  # TODO YOUR CODE HERE
         # Return list of hashes
     return (fingerprint,)
 
@@ -835,7 +848,9 @@ def _(mo):
 @app.cell
 def _(fingerprint, pd):
     def detect(fs, audio):
-        db = pd.read_csv("database.csv", header=None, names=["Hash", "time", "Song"])
+        db = pd.read_csv(
+            "database.csv", header=None, names=["Hash", "time", "Song"]
+        )
         hashes = fingerprint(fs, audio)
         db_matches = db[db.Hash.isin(map(lambda x: x[0], hashes))]
         if len(db_matches) == 0:
@@ -867,14 +882,13 @@ def _():
         Input:
         fs - the sampling frequency of the audio, in Hertz (Hz)
         audio - the full audio to get 20 seconds of; either coldplay or killers
-        
+
         Output:
         A 20 second segment anywhere within the given audio track.
 
         Example:
         get_20_second_segment(killers) == killers[X seconds:(X + 20 seconds)]
         """
-
 
         # TODO YOUR CODE HERE
     return (get_20_second_segment,)
@@ -906,8 +920,8 @@ def _(mo):
 
 @app.cell
 def _(wavfile):
-    fs_2, coldplay_2 = wavfile.read('VivaLaVida.wav')
-    fs_2, killers_1 = wavfile.read('MrBrightside.wav')
+    fs_2, coldplay_2 = wavfile.read("VivaLaVida.wav")
+    fs_2, killers_1 = wavfile.read("MrBrightside.wav")
     return coldplay_2, fs_2, killers_1
 
 
@@ -920,7 +934,7 @@ def _():
         audio - the full audio to detect against; either coldplay or killers
 
         Output:
-        Returns the name of the audio track that most closely matches 
+        Returns the name of the audio track that most closely matches
         a 20 second segment of the provided audio track, and a percentage confidence.
 
         Example:
@@ -962,6 +976,8 @@ def _(mo):
 def _():
     NOISE_MEAN = 10000
     NOISE_STANDARD_DEVIATION = 10000
+
+
     def add_gaussian_noise(audio_segment):
         """
         Input:
@@ -988,8 +1004,8 @@ def _():
         audio_segment - an audio segment from an unknown track WITHOUT Gaussian noise
 
         Output:
-        Returns the name of the audio track that most closely matches 
-        a 20 second segment of the provided audio track, WITH added 
+        Returns the name of the audio track that most closely matches
+        a 20 second segment of the provided audio track, WITH added
         Gaussian noise and a percentage confidence.
 
         See:
@@ -1015,7 +1031,9 @@ def _(mo):
 
 @app.cell
 def _(add_gaussian_noise, coldplay_2, fs_2, get_20_second_segment, ipd):
-    ipd.Audio(add_gaussian_noise(get_20_second_segment(fs_2, coldplay_2)).T, rate=fs_2)
+    ipd.Audio(
+        add_gaussian_noise(get_20_second_segment(fs_2, coldplay_2)).T, rate=fs_2
+    )
     return
 
 
@@ -1043,11 +1061,11 @@ def _(mo):
 
 @app.cell
 def _(coldplay_2, fs_2):
-    unknown_segment = coldplay_2[10 * fs_2:30 * fs_2].copy()
-    unknown_segment[:2 * fs_2] = 0
-    unknown_segment[6 * fs_2:8 * fs_2] = 0
-    unknown_segment[16 * fs_2:20 * fs_2] = 0
-    unknown_segment[2 * fs_2:4 * fs_2] = 0
+    unknown_segment = coldplay_2[10 * fs_2 : 30 * fs_2].copy()
+    unknown_segment[: 2 * fs_2] = 0
+    unknown_segment[6 * fs_2 : 8 * fs_2] = 0
+    unknown_segment[16 * fs_2 : 20 * fs_2] = 0
+    unknown_segment[2 * fs_2 : 4 * fs_2] = 0
     return (unknown_segment,)
 
 
@@ -1063,7 +1081,7 @@ def _(fs_2, ipd, unknown_segment):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""How does Shazam do now? Surely it'll fail with half the clip missing.""")
     return
@@ -1075,7 +1093,7 @@ def _(detect, fs_2, unknown_segment):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""Again, it succeeds! Our fingerprinting procedure is again proving its robustness. What about *Mr. Brightside*?""")
     return
@@ -1083,11 +1101,11 @@ def _(mo):
 
 @app.cell
 def _(fs_2, killers_1):
-    unknown_segment_1 = killers_1[10 * fs_2:30 * fs_2].copy()
-    unknown_segment_1[:2 * fs_2] = 0
-    unknown_segment_1[6 * fs_2:8 * fs_2] = 0
-    unknown_segment_1[16 * fs_2:20 * fs_2] = 0
-    unknown_segment_1[2 * fs_2:4 * fs_2] = 0
+    unknown_segment_1 = killers_1[10 * fs_2 : 30 * fs_2].copy()
+    unknown_segment_1[: 2 * fs_2] = 0
+    unknown_segment_1[6 * fs_2 : 8 * fs_2] = 0
+    unknown_segment_1[16 * fs_2 : 20 * fs_2] = 0
+    unknown_segment_1[2 * fs_2 : 4 * fs_2] = 0
     return (unknown_segment_1,)
 
 
@@ -1167,11 +1185,15 @@ def _(mo):
 @app.cell
 def _(fingerprint, wavfile):
     import csv
+
+
     def add_to_db(filename):
         fs, audio = wavfile.read(filename)
         hashes = fingerprint(audio, fs)
-        with open('database.csv', mode='a') as db_file:
-            db_writer = csv.writer(db_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        with open("database.csv", mode="a") as db_file:
+            db_writer = csv.writer(
+                db_file, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL
+            )
             for hash_pair in hashes:
                 db_writer.writerow([hash_pair[0], hash_pair[1], filename])
     return add_to_db, csv

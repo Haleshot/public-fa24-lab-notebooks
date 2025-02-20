@@ -1,13 +1,19 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
+#     "ipython==8.32.0",
 #     "marimo",
+#     "matplotlib==3.10.0",
+#     "numpy==2.2.3",
+#     "scipy==1.15.2",
 # ]
+# [tool.marimo.runtime]
+# auto_instantiate = false
 # ///
 
 import marimo
 
-__generated_with = "0.11.5"
+__generated_with = "0.11.7"
 app = marimo.App(width="medium")
 
 
@@ -154,15 +160,79 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     # Cell tags: worksheet-0
-    # '%matplotlib inline' command supported automatically in marimo
-    # magic command not supported in marimo; please file an issue to add support
-    # %run support_code/APS.py
-    # magic command not supported in marimo; please file an issue to add support
-    # %run support_code/helper_functions.py
-    return
+    from support_code.APS import APS
+    from support_code.helper_functions import (
+        average_multiple_signals,
+        construct_system_test,
+        correlation_plots,
+        cross_corr_demo,
+        cross_corr_demo_1,
+        cross_corr_demo_2,
+        cross_corr_test,
+        cross_correlation,
+        hyperbola_demo_1,
+        inf_periodic_cross_corr,
+        least_squares_test,
+        plot_average_multiple_signals,
+        plot_shifted,
+        plot_speakers_demo,
+        pltBeacons,
+        separate_signal,
+        sliderPlots,
+        test,
+        test_correlation,
+        test_correlation_plot,
+        test_identify_offsets,
+        test_loc,
+        test_offsets_to_tdoas,
+        test_signal_to_distances,
+        test_signal_to_tdoas,
+        delay_samples0,
+        delay_samples1,
+        delay_samples2,
+        received,
+        sent_0,
+        sent_1,
+        sent_2,
+    )
+    return (
+        APS,
+        average_multiple_signals,
+        construct_system_test,
+        correlation_plots,
+        cross_corr_demo,
+        cross_corr_demo_1,
+        cross_corr_demo_2,
+        cross_corr_test,
+        cross_correlation,
+        delay_samples0,
+        delay_samples1,
+        delay_samples2,
+        hyperbola_demo_1,
+        inf_periodic_cross_corr,
+        least_squares_test,
+        plot_average_multiple_signals,
+        plot_shifted,
+        plot_speakers_demo,
+        pltBeacons,
+        received,
+        sent_0,
+        sent_1,
+        sent_2,
+        separate_signal,
+        sliderPlots,
+        test,
+        test_correlation,
+        test_correlation_plot,
+        test_identify_offsets,
+        test_loc,
+        test_offsets_to_tdoas,
+        test_signal_to_distances,
+        test_signal_to_tdoas,
+    )
 
 
 @app.cell(hide_code=True)
@@ -312,9 +382,9 @@ def _(mo):
 
         ```python
         def cross_correlation(stationary_signal, sliding_signal):
-        
+
             \"\"\"Compute the cross_correlation of two given signals 
-            
+
             Args:
             stationary_signal (np.array): input signal 1
             sliding_signal (np.array): input signal 2
@@ -411,8 +481,18 @@ def _(mo):
 
 
 @app.cell
-def _(sliderPlots):
-    sliderPlots()
+def _(mo):
+    delay_samples_0 = mo.ui.slider(-500, 500, step=10)
+    delay_samples_1 = mo.ui.slider(-500, 500, step=10)
+    delay_samples_2 = mo.ui.slider(-500, 500, step=10)
+
+    delay_samples_0, delay_samples_1, delay_samples_2
+    return delay_samples_0, delay_samples_1, delay_samples_2
+
+
+@app.cell
+def _(delay_samples0, delay_samples1, delay_samples2, pltBeacons):
+    pltBeacons(delay_samples0.value, delay_samples1.value, delay_samples2.value)
     return
 
 

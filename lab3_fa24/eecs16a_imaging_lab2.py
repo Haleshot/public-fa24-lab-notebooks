@@ -7,6 +7,8 @@
 #     "pyserial==3.5",
 #     "tqdm==4.67.1",
 # ]
+# [tool.marimo.runtime]
+# auto_instantiate = false
 # ///
 
 import marimo

@@ -4,14 +4,14 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 # from IPython.html.widgets import *
-from IPython.html.widgets import interact
+#from IPython.html.widgets import interact
 #from ipywidgets import *
 import matplotlib.pyplot as plt
 from math import sin, cos, pi, sqrt
 from random import random
 import scipy.io
 import scipy.signal
-from APS import APS
+from .APS import APS
 
 
 Lab = APS('new_data.npy', testing = 'Test', ms = True)

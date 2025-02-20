@@ -7,11 +7,13 @@
 #     "scipy==1.15.1",
 #     "marimo",
 # ]
+# [tool.marimo.runtime]
+# auto_instantiate = false
 # ///
 
 import marimo
 
-__generated_with = "0.11.5"
+__generated_with = "0.11.7"
 app = marimo.App(width="medium")
 
 
@@ -103,6 +105,7 @@ def _():
     from IPython.display import display
     import autograder
     from autograder import (
+        test_q0,
         test_q1,
         test_q2,
         test_q3,
@@ -132,6 +135,7 @@ def _():
         scipy,
         struct,
         test_all,
+        test_q0,
         test_q1,
         test_q10,
         test_q2,
@@ -182,11 +186,11 @@ def _(mo):
         r"""
         <a id='questions'></a>
 
-        # Jupyter Notebook
+        # marimo notebook
 
-        Before you get started, let's take a look at the page right now. This is what we call a Jupyter Notebook -- an interactive interface for developing and sharing development documents. It is frequently used for data visualization projects (as you will see later in the semester) and collaborating with others.
+        Before you get started, let's take a look at the page right now. This is what we call a marimo notebook -- an interactive interface for developing and sharing development documents. It is frequently used for data visualization projects (as you will see later in the semester) and collaborating with others.
 
-        *Tip:* Jupyter Notebook comes with some handy hotkeys. You can press `tab` while typing for autocomplete and `shift + tab` on a method to open its documentation.
+        *Tip:* marimo notebooks comes with some handy hotkeys. You can press `tab` while typing for autocomplete and autocompletion. Also see the "Live docs" panel on the left-hand side to see documentation as you type.
         """
     )
     return
@@ -251,6 +255,8 @@ def _(mo):
 def _():
     def welcome(name):
         print("Welcome to 16A " + name)
+
+
     welcome("your name here")  # type your name inside the quotes
     return (welcome,)
 
@@ -318,11 +324,11 @@ def _(mo):
 
 @app.cell
 def _():
-    i = 0
-    while i < 5:
-        print("i:", i)
-        i = i + 1
-    return (i,)
+    _i = 0
+    while _i < 5:
+        print("i:", _i)
+        _i = _i + 1
+    return
 
 
 @app.cell(hide_code=True)
@@ -333,9 +339,9 @@ def _(mo):
 
 @app.cell
 def _():
-    for i_1 in range(0, 5):
-        print("i:", i_1)
-    return (i_1,)
+    for _i in range(0, 5):
+        print("i:", _i)
+    return
 
 
 @app.cell
@@ -567,6 +573,7 @@ def _(np):
     """numpy.linspace() is useful when you know the number of divisions over a certain range you want,
     i.e., you want to divide the range [0-9] into 10 equal divisions.
     """
+
     np_arr1 = np.linspace(0, 9, 10)
     print("np_arr1:", np_arr1)
     "numpy.arange() is useful when you know how far away each division is from one another, a.k.a. the step size.\nYou want to start at 0 and get every number that is 1 away from the previous number until you get to 9.\n"
@@ -639,8 +646,12 @@ def _(mo):
 @app.cell
 def _(np):
     simple_arr_1 = np.arange(0, 20, 1)
-    print("\nEvery-other element of simple_arr, starting from 0:", simple_arr_1[::2])
-    print("\nEvery-third element of simple_arr, starting from 0:", simple_arr_1[::3])
+    print(
+        "\nEvery-other element of simple_arr, starting from 0:", simple_arr_1[::2]
+    )
+    print(
+        "\nEvery-third element of simple_arr, starting from 0:", simple_arr_1[::3]
+    )
     print(
         "\nEvery-other element of simple_arr, starting from 10-16:",
         simple_arr_1[10:16:2],
@@ -650,29 +661,29 @@ def _(np):
 
 @app.cell
 def _(np):
-    i_5 = np.array(range(25), dtype=np.int64).reshape([5, 5])
-    print("i:\n", i_5)
-    print("\nFirst row of i:", i_5[0])
-    print("\nFirst column of i:", i_5[:, 0])
-    print("\nRows 1-3 of i:\n", i_5[1:4])
-    print("\nColumns 1-3 of i:\n", i_5[:, 1:4])
-    print("\nTop left 3x3 of i:\n", i_5[:3, :3])
-    print("\nEvery-other column of i:\n", i_5[:, ::2])
-    return (i_5,)
+    _i = np.array(range(25), dtype=np.int64).reshape([5, 5])
+    print("i:\n", _i)
+    print("\nFirst row of i:", _i[0])
+    print("\nFirst column of i:", _i[:, 0])
+    print("\nRows 1-3 of i:\n", _i[1:4])
+    print("\nColumns 1-3 of i:\n", _i[:, 1:4])
+    print("\nTop left 3x3 of i:\n", _i[:3, :3])
+    print("\nEvery-other column of i:\n", _i[:, ::2])
+    return
 
 
 @app.cell
 def _(np):
-    j_1 = np.zeros([5, 5])
-    print("j (5x5 NumPy array of all zeros):\n", j_1)
+    _j = np.zeros([5, 5])
+    print("j (5x5 NumPy array of all zeros):\n", _j)
     inner = np.ones([3, 3])
     print("\ninner (3x3 Numpy array of all ones):\n", inner)
-    j_1[1:4, 1:4] = inner
-    print("\nj:\n", j_1)
+    _j[1:4, 1:4] = inner
+    print("\nj:\n", _j)
     print(
         "\n Notice how the values of inner are assigned to the 3x3 slice at the center of j!"
     )
-    return inner, j_1
+    return (inner,)
 
 
 @app.cell(hide_code=True)
@@ -757,21 +768,21 @@ def _(np):
 
 @app.cell
 def _(np):
-    i_6 = np.eye(4)
-    print("\ni:\n", i_6)
-    i_inv = np.linalg.inv(i_6)
+    _i = np.eye(4)
+    print("\ni:\n", _i)
+    i_inv = np.linalg.inv(_i)
     print("\ni_inv:\n", i_inv)
     print("\nAs expected, i == inv(i).")
-    j_2 = np.array([[0, 1, 0, 0], [2, 0, 0, 0], [0, 0, 0, 3], [0, 0, 4, 0]])
-    print("\nj:\n", j_2)
-    j_inv = np.linalg.inv(j_2)
+    _j = np.array([[0, 1, 0, 0], [2, 0, 0, 0], [0, 0, 0, 3], [0, 0, 4, 0]])
+    print("\nj:\n", _j)
+    j_inv = np.linalg.inv(_j)
     print("\nj_inv:\n", j_inv)
     print(
         "\nMultiplying an invertible matrix with its inverse gives us the identity matrix.\n"
     )
-    print("\nj*inv(j):\n", np.dot(j_2, j_inv))
+    print("\nj*inv(j):\n", np.dot(_j, j_inv))
     print("\nThus, as expected, j*inv(j) == i.")
-    return i_6, i_inv, j_2, j_inv
+    return i_inv, j_inv
 
 
 @app.cell
@@ -877,9 +888,8 @@ def _(mo):
 
 
 @app.cell
-def _():
-    # magic command not supported in marimo; please file an issue to add support
-    # %run autograder.py
+def _(autograder):
+    autograder.test_q0()
     return
 
 

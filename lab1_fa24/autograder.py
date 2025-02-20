@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 import numpy as np
 
+def test_q0():
+    print('Autograder loaded!\nQuestion 0 Passed!')
+
 def test_q1(q1):
     A = np.array([[ 0.447005  ,  0.21022493,  0.93728845,  0.83303825,  0.08056971],
         [ 0.00610984,  0.82094051,  0.97360379,  0.35340124,  0.30015068],
