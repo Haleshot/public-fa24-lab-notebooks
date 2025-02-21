@@ -1,4 +1,3 @@
-
 import numpy as np
 import scipy.io
 import scipy.signal
@@ -401,7 +400,7 @@ class APS:
             plot_table_beacons()
 
             plt.legend()
-            plt.show()
+            plt.gca()
 
         """
         Initial Plot
@@ -411,7 +410,7 @@ class APS:
         plot_table_beacons()
         ax.add_artist(circle)
         plt.legend()
-        plt.show()
+        plt.gca()
 
         #     f.canvas.mpl_disconnect(eid)
         f.canvas.mpl_connect('button_press_event', onclick)
@@ -419,41 +418,84 @@ class APS:
         return LOC
     
     
-    def load_corr_sig(self, identify_peak = None):
+    def load_corr_sig(self, identify_peak=None):
+        """Load and process correlation signal"""
+        try:
+            if self.rawSignal is None:
+                print("Error: No raw signal loaded")
+                return None
+            
+            # Plot the received signal
+            plt.figure(figsize=(18,4))
+            plt.plot(self.rawSignal)
+            
+            # Convert the received signals
+            demod = self.demodulate_signal(self.rawSignal)
+            if demod is None:
+                print("Error: Failed to demodulate signal")
+                return None
+            
+            Lperiod = len(self.beaconList[0].binarySignal)
+            Ncycle = len(demod) // Lperiod
+            sig = []
+            
+            # Process each beacon
+            for ib, b in enumerate(self.beaconList[:4]):
+                try:
+                    s = self.cross_correlation(demod[0:Lperiod], b.binarySignal)
+                    for i in range(1, Ncycle):
+                        s = np.hstack([s, self.cross_correlation(demod[i*Lperiod:(i+1)*Lperiod], b.binarySignal)])
+                    sig.append(s)
+                except Exception as e:
+                    print(f"Error processing beacon {ib}: {e}")
+                    return None
 
-        # Plot the received signal
-        plt.figure(figsize=(18,4))
-        plt.plot(self.rawSignal)
-        # Convert the received signals into the format our functions expect
-        demod = self.demodulate_signal(self.rawSignal)
-        Lperiod = len(self.beaconList[0].binarySignal)
-        Ncycle = len(demod) // Lperiod
-        sig = []
-        # Iterate through beacons
-        for ib, b in enumerate(self.beaconList[:4]):
-            s = self.cross_correlation(demod[0:Lperiod],b.binarySignal)
-            # Iterate through cycles
-            for i in range(1,Ncycle):
-                s = np.hstack([s, self.cross_correlation(demod[i*Lperiod:(i+1)*Lperiod], b.binarySignal)])
+            # Average signals
+            sig = [self.average_singular_signal(s) for s in sig]
+            if not sig:
+                print("Error: No signals processed")
+                return None
 
-            sig.append(s)
-#             print(s)
-        sig = [self.average_singular_signal(s) for s in sig]
-#         print(sig)
-        # Plot the cross-correlation with each beacon
-        plt.figure(figsize=(18,4))
-        for i in range(len(sig)):
-            plt.plot(range(len(sig[i])), sig[i], label=self.beaconList[i].name)
-        plt.legend()
+            # Plot cross-correlations
+            plt.figure(figsize=(18,4))
+            for i in range(len(sig)):
+                plt.plot(range(len(sig[i])), sig[i], label=self.beaconList[i].name)
+            plt.legend()
 
-#         Scale the x axis to show +/- 1000 samples around the peaks of the cross correlation
-        if not identify_peak:
-            peak_times = ([self.identify_peak(i) for i in sig])
-        else:
-            peak_times = ([identify_peak(i) for i in sig])
-        plt.xlim(max(min(peak_times)-1000, 0), max(peak_times)+1000)
+            # Handle peak identification
+            peak_func = identify_peak if identify_peak else self.identify_peak
+            peak_times = []
+            
+            # Process peaks with validation
+            for s in sig:
+                try:
+                    if s is not None and len(s) > 0:
+                        peak = peak_func(s)
+                        if peak is not None:
+                            peak_times.append(peak)
+                except Exception as e:
+                    print(f"Error identifying peak: {e}")
+                    continue
+            
+            # Set plot limits based on available peaks
+            if peak_times and len(peak_times) > 0:
+                try:
+                    min_peak = min(x for x in peak_times if x is not None)
+                    max_peak = max(x for x in peak_times if x is not None)
+                    plt.xlim(max(min_peak-1000, 0), max_peak+1000)
+                except Exception as e:
+                    print(f"Error setting plot limits: {e}")
+                    plt.xlim(0, len(sig[0]) if sig and len(sig) > 0 else 1000)
+            else:
+                # Default plot limits if no valid peaks
+                plt.xlim(0, len(sig[0]) if sig and len(sig) > 0 else 1000)
 
-        plt.show()
+            plt.gca()
+            return sig
+        
+        except Exception as e:
+            print(f"Error in load_corr_sig: {e}")
+            return None
 
         
     def plot_speakers(self, plt, coords, distances, xlim=None, ylim=None, circle=True, name = False):
@@ -509,101 +551,31 @@ class APS:
 
 
         
-    def simulation_testing(self, filename, construct_system = None, least_squares = None, signal_to_tdoas = None):
-        # LOAD IN SIMULATION DATA
-        record_rate, raw_signal = scipy.io.wavfile.read(filename)
-        # Get single channel
-        if (len(raw_signal.shape) == 2):
-            raw_signal = raw_signal[:,0]
-        plt.figure(figsize=(16,4))
-        plt.title("Raw Imported Signal")
-        plt.plot(raw_signal)     
-
-        _, averaged = self.post_processing(raw_signal)
-    
-        if signal_to_tdoas:
-            demod = self.demodulate_signal(raw_signal)
-            TDOA = np.array(signal_to_tdoas(demod))
-        else:
-        	self.identify_offsets(averaged)
-        	self.signal_to_distances(0)
-        	TDOA = self.offsets_to_tdoas()
-        
-
-        # Plot the averaged and separated output for each beacon
-        
-        fig = plt.figure(figsize=(12,6))
-        for i in range(len(averaged)):
-            plt.subplot(3,2,i+1)
-            plt.plot(averaged[i])
-            plt.title("Extracted Beacon %d"%i)
-        plt.tight_layout()
-            
-        # Load Beaker Locations for Simulation
-        
-        simulation = self.beaconsLocation
-#        print('simulation', simulation)
-#        print('TDOA', TDOA)
-        if not least_squares and not construct_system:
-            x, y, t0 = self.calculate_position(self.least_squares, self.construct_system, simulation, TDOA)
-        else:
-            x, y, t0 = self.calculate_position(least_squares, construct_system, simulation, TDOA)
-        
-        #print( "Distance differences (m)): [%s]\n"%", ".join(["%0.4f" % d for d in distances]))
-        print( "Least Squares Microphone Position: %0.4f, %0.4f, time-offset: %0.4f" % (x, y,t0))
-        print( "Actual Microphone Position: %0.4f, %0.4f" % (self.microphoneLocation[0],
-                                                                   self.microphoneLocation[1]))
-
-        # Beacon Distances using signals to distances and t0
-        dist_from_origin = np.linalg.norm([x, y])
-        dist_from_speakers = [d + dist_from_origin for d in (self.distancesPost if not signal_to_tdoas else TDOA*self.V_AIR)]
-        print( "Calcuated Distances from Beacons : [%s]\n"%", ".join(["%0.4f" % d for d in dist_from_speakers]))
-
-        # Beacon Distances using calculated microphone position and Euclidean Norm
-        # dist_from_speakers = [np.linalg.norm([x - x_s, y - y_s]) for (x_s, y_s) in self.beaconsLocation]
-        # print( "Calcuated Distances from Beacons : [%s]\n"%", ".join(["%0.4f" % d for d in dist_from_speakers]))
-
-        # Plot speakers and Microphone
-        xmin = min(simulation[:,0])
-        xmax = max(simulation[:,0])
-        xrange = xmax-xmin
-        ymin = min(simulation[:,1])
-        ymax = max(simulation[:,1])
-        yrange = ymax-ymin
-        plt.figure(figsize=(15,15))
-        plt.scatter(x, y, marker='o', color='r')
-        plt.text(x-0.05*xrange, y+0.01*yrange, 'Microphone', color='r')
-        self.plot_speakers(plt, simulation, [d for d in dist_from_speakers],xrange,yrange, circle=False, name = True)
+    def simulation_testing(self, filename, construct_system=None, least_squares=None, signal_to_tdoas=None):
+        """Run simulation test with validation"""
+        try:
+            # Load and process signal
+            record_rate, raw_signal = scipy.io.wavfile.read(filename)
+            if isinstance(raw_signal, np.ndarray):
+                if raw_signal.ndim > 1:
+                    raw_signal = raw_signal[:,0]
+                
+                # Process signal
+                demodulated = self.demodulate_signal(raw_signal)
+                _, avgs = self.post_processing(demodulated)
+                
+                if signal_to_tdoas is not None:
+                    TDOA = signal_to_tdoas(demodulated)
+                    if construct_system is not None and least_squares is not None:
+                        A, b = construct_system(self.beaconsLocation, TDOA, self.V_AIR)
+                        location = least_squares(A, b)
+                        self.plot_location(location, A, b)
+                        return location
+        except Exception as e:
+            print(f"Error in simulation_testing: {e}")
+            return None
 
 
-        # Plot linear equations for LS
-        if not least_squares and not construct_system:
-            A, b = self.construct_system(simulation, TDOA, self.V_AIR) #for debugging
-        else:
-            A, b = construct_system(simulation, TDOA, self.V_AIR) #for debugging
-        colors = ['orange', 'g', 'c', 'y', 'm', 'b', 'k']
-        x2 = np.linspace(xmin-xrange*.2, xmax+xrange*.2, 1000)
-        j=0;
-
-        for i in range(len(b)):
-            j=j+1
-            y2 = [(b[i] - A[i][0]*xi -A[i][2]*t0) / A[i][1] for xi in x2]
-            plt.plot(x2, y2, color=colors[j], label="Linear Equation " + str(j), linestyle='-')
-            plt.xlim(xmin-xrange*.2, xmax+xrange*.2)
-            plt.ylim(ymin-yrange*.2, ymax+yrange*.2)
-#             plt.legend(bbox_to_anchor=(1.4, 1))
-#             plt.legend()
-
-        #for i in range(5):
-        #    hyp= self.draw_hyperbola(simulation[i+1], simulation[0], self.distancesPost[i+1]) #Draw hyperbola
-        #    plt.plot(hyp[:,0], hyp[:,1], color=colors[i+1], label='Hyperbolic Equation '+str(i+1), linestyle=':')
-
-        plt.xlim(xmin-xrange*.2, xmax+xrange*.2)
-        plt.ylim(ymin-yrange*.2, ymax+yrange*.2)
-#         plt.legend(bbox_to_anchor=(1.6, 1))
-        plt.legend()
-        plt.show()
-        
         
     def user_test(self, construct_system, least_squares, signal_to_tdoas):
         filename = input("Type filename (including the .wav): ")
