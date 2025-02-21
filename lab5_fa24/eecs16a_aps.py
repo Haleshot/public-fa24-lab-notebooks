@@ -1,7 +1,6 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#     "ipython==8.32.0",
 #     "marimo",
 #     "matplotlib==3.10.0",
 #     "numpy==2.2.3",
@@ -162,26 +161,26 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _():
-    # Cell tags: worksheet-0
     from support_code.APS import APS
     from support_code.helper_functions import (
         average_multiple_signals,
         construct_system_test,
         correlation_plots,
+        create_correlation_slider,  # Add this import
         cross_corr_demo,
         cross_corr_demo_1,
         cross_corr_demo_2,
         cross_corr_test,
         cross_correlation,
         hyperbola_demo_1,
-        inf_periodic_cross_corr,
+        # Remove inf_periodic_cross_corr from imports
         least_squares_test,
         plot_average_multiple_signals,
         plot_shifted,
         plot_speakers_demo,
         pltBeacons,
         separate_signal,
-        sliderPlots,
+        # Remove sliderPlots from imports
         test,
         test_correlation,
         test_correlation_plot,
@@ -203,6 +202,7 @@ def _():
         average_multiple_signals,
         construct_system_test,
         correlation_plots,
+        create_correlation_slider,
         cross_corr_demo,
         cross_corr_demo_1,
         cross_corr_demo_2,
@@ -212,7 +212,6 @@ def _():
         delay_samples1,
         delay_samples2,
         hyperbola_demo_1,
-        inf_periodic_cross_corr,
         least_squares_test,
         plot_average_multiple_signals,
         plot_shifted,
@@ -223,7 +222,6 @@ def _():
         sent_1,
         sent_2,
         separate_signal,
-        sliderPlots,
         test,
         test_correlation,
         test_correlation_plot,
@@ -340,12 +338,6 @@ def _(mo):
     return
 
 
-@app.cell
-def _(cross_corr_demo):
-    cross_corr_demo()
-    return
-
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -404,25 +396,6 @@ def _(mo):
     )
     return
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""Run the following cell to display an interactive plot of `stationary_signal`, `sliding_signal`, and the resulting periodic linear cross-correlation vector. Set the offset slider to different values to visualize the "periodic" part of the stationary signal and understand the relationship between the offset and correlation result. **Note: to avoid lag, click on the slider to reposition it instead of dragging.**""")
-    return
-
-
-@app.cell
-def _(inf_periodic_cross_corr):
-    inf_periodic_cross_corr()
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""**Notice that the value of correlation (on the y axis of the lower subplot) is highest when the orange and blue signals overlap the most. Similarly, the value is lowest when the signals overlap the least.** This elucidates how cross-correlation measures the similarity between two signals at different time shifts.""")
-    return
-
-
 @app.cell(hide_code=True)
 def _(mo):
     # Cell tags: worksheet-0
@@ -479,27 +452,39 @@ def _(mo):
     )
     return
 
-
-@app.cell
-def _(mo):
-    delay_samples_0 = mo.ui.slider(-500, 500, step=10)
-    delay_samples_1 = mo.ui.slider(-500, 500, step=10)
-    delay_samples_2 = mo.ui.slider(-500, 500, step=10)
-
-    delay_samples_0, delay_samples_1, delay_samples_2
-    return delay_samples_0, delay_samples_1, delay_samples_2
-
-
-@app.cell
-def _(delay_samples0, delay_samples1, delay_samples2, pltBeacons):
-    pltBeacons(delay_samples0.value, delay_samples1.value, delay_samples2.value)
-    return
-
-
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(r"""The sliders control the delay of each beacon (in units of samples). Experiment with the delay values for each beacon and observe how the cross-correlation plot changes. If the slider does not appear or work for some reason, you can manually change the values in the tuples for `delay_samples0`, `1`, and `2`. For example, try `delay_samples0 = (-300, 400, 10)` and see how the plot changes.""")
+    mo.md(r"""Run the following cell to display an interactive plot of `stationary_signal`, `sliding_signal`, and the resulting periodic linear cross-correlation vector. Set the offset slider to different values to visualize the "periodic" part of the stationary signal and understand the relationship between the offset and correlation result. **Note: to avoid lag, click on the slider to reposition it instead of dragging.**""")
     return
+
+
+@app.cell
+def _(delay_controls):
+    delay_controls
+    return
+
+
+@app.cell
+def _(mo):
+    # Create UI controls
+    delay_controls = mo.ui.array([
+        mo.ui.slider(-500, 500, step=10, label="Delay Samples 0"),
+        mo.ui.slider(-500, 500, step=10, label="Delay Samples 1"),
+        mo.ui.slider(-500, 500, step=10, label="Delay Samples 2")
+    ])
+    return (delay_controls,)
+
+
+@app.cell
+def _(delay_controls, pltBeacons):
+    # Get plot from helper function using array values
+    fig = pltBeacons(
+        int(delay_controls[0].value), 
+        int(delay_controls[1].value), 
+        int(delay_controls[2].value)
+    )
+    fig
+    return (fig,)
 
 
 @app.cell(hide_code=True)
@@ -1167,6 +1152,12 @@ def _(construct_system, least_squares, test_loc):
     return
 
 
+@app.cell
+def _():
+    import numpy as np
+    return (np,)
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -1255,6 +1246,27 @@ def _(mo):
         Your GSI or a Lab Assistant will join your breakout room when they are available and go through some checkoff questions with your group. They will go through the checkoff list in order. Please be patient!
         """
     )
+    return
+
+
+@app.cell
+def _(correlation_slider):
+    correlation_slider
+    return
+
+
+@app.cell
+def _(create_correlation_slider):
+    # Create correlation slider
+    correlation_slider = create_correlation_slider()
+    return (correlation_slider,)
+
+
+@app.cell
+def _(correlation_plots, correlation_slider):
+    # Get plot and display with marimo
+    _fig = correlation_plots(correlation_slider.value)
+    _fig
     return
 
 
